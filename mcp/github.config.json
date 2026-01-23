@@ -1,0 +1,58 @@
+{
+  "server_type": "github",
+  "version": "1.0",
+  "authority": "full",
+  "authentication": {
+    "method": "personal_access_token",
+    "token_env_var": "GITHUB_TOKEN",
+    "note": "Set GITHUB_TOKEN environment variable before use"
+  },
+  "allowed_operations": [
+    "read_repository",
+    "clone_repository",
+    "create_branch",
+    "commit_changes",
+    "push_to_remote",
+    "create_pull_request",
+    "read_issues",
+    "create_issue",
+    "comment_on_issue",
+    "read_pull_requests"
+  ],
+  "scope": {
+    "allowed_repositories": [
+      "user/epsilon-ecosystem",
+      "user/epsilon-man-content",
+      "user/k-and-f-consulting"
+    ],
+    "default_repository": "user/epsilon-ecosystem",
+    "note": "Replace 'user' with actual GitHub username"
+  },
+  "commit_settings": {
+    "default_branch": "main",
+    "commit_message_format": "[Epsilon v1.3] {action}: {description}",
+    "auto_commit": false,
+    "require_confirmation_before_push": true
+  },
+  "pull_request_settings": {
+    "default_base_branch": "main",
+    "auto_assign_reviewers": false,
+    "default_labels": ["automated", "epsilon-system"]
+  },
+  "rate_limiting": {
+    "respect_github_limits": true,
+    "max_commits_per_hour": 50,
+    "max_api_calls_per_hour": 5000
+  },
+  "safety_rules": {
+    "never_force_push": true,
+    "always_pull_before_push": true,
+    "create_backup_branch_before_destructive_ops": true
+  },
+  "logging": {
+    "log_all_operations": true,
+    "log_file": "H:/decisions/github_operations_log.md",
+    "log_format": "markdown",
+    "include_commit_hashes": true
+  }
+}

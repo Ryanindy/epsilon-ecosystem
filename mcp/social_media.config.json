@@ -1,0 +1,48 @@
+{
+  "server_type": "social_media",
+  "version": "1.0",
+  "status": "disabled",
+  "note": "Enable when viral content flow is operational and accounts are authenticated",
+  "authority": "post-with-confirmation",
+  "platforms": {
+    "tiktok": {
+      "enabled": false,
+      "authentication": {
+        "method": "oauth",
+        "credentials_env_var": "TIKTOK_API_CREDENTIALS"
+      },
+      "allowed_operations": ["post_video", "schedule_post", "read_analytics"],
+      "require_confirmation": true
+    },
+    "instagram": {
+      "enabled": false,
+      "authentication": {
+        "method": "oauth",
+        "credentials_env_var": "INSTAGRAM_API_CREDENTIALS"
+      },
+      "allowed_operations": ["post_image", "post_reel", "schedule_post"],
+      "require_confirmation": true
+    },
+    "twitter": {
+      "enabled": false,
+      "authentication": {
+        "method": "oauth",
+        "credentials_env_var": "TWITTER_API_CREDENTIALS"
+      },
+      "allowed_operations": ["post_tweet", "schedule_tweet", "read_mentions"],
+      "require_confirmation": true
+    }
+  },
+  "safety_rules": {
+    "never_auto_post_without_confirmation": true,
+    "max_posts_per_day": 10,
+    "content_review_required": true,
+    "profanity_filter": true
+  },
+  "logging": {
+    "log_all_posts": true,
+    "log_file": "H:/decisions/social_media_log.md",
+    "include_timestamps": true,
+    "include_platform": true
+  }
+}

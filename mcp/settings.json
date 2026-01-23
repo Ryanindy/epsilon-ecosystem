@@ -1,0 +1,42 @@
+{
+  "system_name": "Epsilon Ecosystem v1.3",
+  "mcp_version": "1.0",
+  "servers": [
+    {
+      "id": "filesystem",
+      "enabled": true,
+      "config_path": "mcp/filesystem.config.json",
+      "authority": "read-write",
+      "scope": "project-only"
+    },
+    {
+      "id": "github",
+      "enabled": true,
+      "config_path": "mcp/github.config.json",
+      "authority": "full",
+      "scope": "configured-repos"
+    },
+    {
+      "id": "social_media",
+      "enabled": false,
+      "config_path": "mcp/social_media.config.json",
+      "authority": "post-with-confirmation",
+      "scope": "authenticated-accounts",
+      "note": "Enable when viral content flow is operational"
+    }
+  ],
+  "global_settings": {
+    "logging_enabled": true,
+    "log_path": "H:/decisions/mcp_operations_log.md",
+    "require_confirmation_for": [
+      "delete_operations",
+      "external_api_calls",
+      "git_push",
+      "social_media_post"
+    ],
+    "rate_limits": {
+      "github_api_calls_per_hour": 5000,
+      "filesystem_writes_per_minute": 100
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "server_type": "filesystem",
+  "version": "1.0",
+  "authority": "read-write",
+  "allowed_operations": [
+    "read_file",
+    "write_file",
+    "list_directory",
+    "create_directory",
+    "delete_file",
+    "move_file",
+    "copy_file"
+  ],
+  "scope": {
+    "base_path": "./",
+    "allowed_directories": [
+      "skills/",
+      "flows/",
+      "H:/",
+      "output/",
+      "temp/"
+    ],
+    "forbidden_directories": [
+      ".git/",
+      "node_modules/",
+      ".env",
+      "secrets/"
+    ]
+  },
+  "permissions": {
+    "skills/": {
+      "read": true,
+      "write": true,
+      "delete": false,
+      "note": "Skills can be created/modified but not deleted (safety)"
+    },
+    "flows/": {
+      "read": true,
+      "write": true,
+      "delete": false
+    },
+    "H:/": {
+      "read": true,
+      "write": true,
+      "delete": false,
+      "note": "RAG content is append-only by default"
+    },
+    "H:/decisions/": {
+      "read": true,
+      "write": true,
+      "delete": false,
+      "note": "Decision logs are immutable (append-only)"
+    },
+    "output/": {
+      "read": true,
+      "write": true,
+      "delete": true,
+      "note": "Temporary outputs can be deleted"
+    }
+  },
+  "file_type_restrictions": {
+    "allowed_read": [".md", ".txt", ".json", ".yaml", ".py", ".js"],
+    "allowed_write": [".md", ".txt", ".json", ".yaml"],
+    "forbidden": [".exe", ".dll", ".bat", ".sh", ".ps1"]
+  },
+  "safety_rules": {
+    "max_file_size_mb": 10,
+    "backup_before_overwrite": true,
+    "backup_path": "temp/backups/",
+    "confirm_before_delete": true
+  },
+  "logging": {
+    "log_all_operations": true,
+    "log_file": "H:/decisions/filesystem_operations_log.md",
+    "log_format": "markdown"
+  }
+}
