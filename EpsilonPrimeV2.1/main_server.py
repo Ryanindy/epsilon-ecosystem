@@ -10,7 +10,22 @@ import sys
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify, render_template
 
-# ... (keep existing imports) ...
+from sms_handler import handle_incoming_sms, generate_ai_response, fetch_client_context
+from tri_mind_graph import run_tri_mind
+
+load_dotenv()
+
+app = Flask(__name__)
+
+# Security: Bearer Token for API
+API_KEY = os.getenv("EPSILON_API_KEY", "epsilon-dev-key")
+
+def check_auth():
+    auth_header = request.headers.get("Authorization")
+    if not auth_header or not auth_header.startswith("Bearer "):
+        return False
+    token = auth_header.split(" ")[1]
+    return token == API_KEY
 
 @app.route("/", methods=["GET"])
 def index():
@@ -26,10 +41,7 @@ def dashboard():
 def sms_endpoint():
     """
     Twilio webhook endpoint for incoming SMS messages.
-    NOTE: In production, use Twilio signature validation.
-    For internal/YOLO use, we check for a simple bypass or key.
     """
-    # Simple check for demo/dev safety
     if not request.values.get("AccountSid") and not check_auth():
          return jsonify({"error": "Unauthorized"}), 401
          
@@ -51,13 +63,8 @@ def chat_completions():
     if not messages:
         return jsonify({"error": "No messages provided"}), 400
 
-    # Extract the latest user message
     last_user_message = next((m["content"] for m in reversed(messages) if m["role"] == "user"), "")
-    
-    # Use a dummy number for API chats or extract from context if available
     sender_number = "API_USER"
-    
-    # Mode Selection: Default vs Sovereign (LangGraph)
     mode = data.get("mode", "default")
     
     try:
@@ -69,7 +76,6 @@ def chat_completions():
     except Exception as e:
         response_text = f"Error generating response: {str(e)}"
 
-    # Construct OpenAI-style response
     return jsonify({
         "id": f"chatcmpl-{str(uuid.uuid4())}",
         "object": "chat.completion",
@@ -96,9 +102,7 @@ def health():
     return "OK", 200
 
 if __name__ == "__main__":
-    # Dual Mode: CLI or Server
     if len(sys.argv) > 1:
-        # CLI Mode: Process arguments as a prompt
         prompt = " ".join(sys.argv[1:])
         sender_number = "CLI_USER"
         try:
@@ -107,8 +111,6 @@ if __name__ == "__main__":
         except Exception as e:
             print(f"Error: {e}")
     else:
-        # Server Mode: Start Flask
         port = int(os.getenv("PORT", 5000))
         debug_mode = os.getenv("FLASK_DEBUG", "False").lower() == "true"
-        # BIND TO LOCALHOST BY DEFAULT FOR SECURITY
         app.run(host="127.0.0.1", port=port, debug=debug_mode)
