@@ -1,0 +1,10 @@
+{
+  "name": "Epsilon Prime Hive",
+  "version": "3.0.0",
+  "status": "online",
+  "master_node": "Epsilon",
+  "orchestrator": "tri_mind_graph.py",
+  "agents_dir": "hive/agents",
+  "state_dir": "hive/state",
+  "active_swarms": []
+}

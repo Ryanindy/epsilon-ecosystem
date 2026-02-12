@@ -1,0 +1,16 @@
+flask
+python-dotenv
+google-genai
+chromadb
+twilio
+pydantic
+requests
+typing-extensions
+psutil
+langgraph
+langchain-google-genai
+langchain-core
+smolagents
+litellm
+mcp
+playwright

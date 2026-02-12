@@ -1,0 +1,9 @@
+{
+  "update_id": 1000,
+  "message": {
+    "chat": {
+      "id": 12345
+    },
+    "text": "Test message from Pickle Rick"
+  }
+}

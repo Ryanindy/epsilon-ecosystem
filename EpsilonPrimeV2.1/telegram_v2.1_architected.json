@@ -1,0 +1,146 @@
+{
+  "name": "Epsilon Prime Telegram Uplink v2.1 (Architected)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "telegram-uplink",
+        "options": {}
+      },
+      "id": "webhook-node",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        100,
+        300
+      ],
+      "webhookId": "telegram-uplink"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = items[0].json.body;\nlet text = body.message.text || '';\n// Remove problematic characters and trim\ntext = text.replace(/[\\\"\\r\\n]/g, ' ').trim();\n\nreturn [{\n  json: {\n    chat_id: body.message.chat.id,\n    user_text: text,\n    username: body.message.from.username || 'unknown',\n    raw_payload: body\n  }\n}];"
+      },
+      "id": "sanitize-node",
+      "name": "Sanitize & Extract",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        300,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:5000/v1/chat/completions",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ 'messages': [{ 'role': 'user', 'content': $json.user_text }], 'model': 'epsilon-prime-v2.1', 'user': $json.chat_id.toString() }) }}",
+        "options": {}
+      },
+      "id": "ask-epsilon",
+      "name": "Ask Epsilon Prime",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        500,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{$node['Sanitize & Extract'].json['chat_id']}}",
+        "text": "={{$json.choices[0].message.content}}",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "reply-telegram",
+      "name": "Reply via Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        700,
+        300
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "QdDdSN8YnT9Ap8mx"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{$node['Sanitize & Extract'].json['chat_id']}}",
+        "text": "⚠️ *Epsilon Prime Error*\n\nThe bridge at `localhost:5000` is currently unresponsive. Please verify the server status.",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "error-reply",
+      "name": "Error Notification",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        700,
+        450
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "QdDdSN8YnT9Ap8mx"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Sanitize & Extract",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sanitize & Extract": {
+      "main": [
+        [
+          {
+            "node": "Ask Epsilon Prime",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ask Epsilon Prime": {
+      "main": [
+        [
+          {
+            "node": "Reply via Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ],
+      "error": [
+        [
+          {
+            "node": "Error Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "active": true
+}

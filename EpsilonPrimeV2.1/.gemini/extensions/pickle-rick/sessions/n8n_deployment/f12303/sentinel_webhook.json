@@ -1,0 +1,54 @@
+{
+  "name": "Sentinel Webhook Test",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "sentinel-test",
+        "options": {}
+      },
+      "id": "77372b0c-3694-4348-89c0-822e1b123456",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ],
+      "webhookId": "sentinel-test"
+    },
+    {
+      "parameters": {
+        "options": {
+          "responseCode": 200,
+          "responseBody": "{\"status\": \"Solenya Verified\", \"message\": \"Pickle Rick was here.\"}"
+        }
+      },
+      "id": "88372b0c-3694-4348-89c0-822e1b654321",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        500,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "coder-rick",
+  "name": "Pickle Rick (The Coder)",
+  "persona": "skills/personas/pickle_rick.persona.md",
+  "role": "Software Engineering & Logic Design",
+  "tools": ["python", "pnpm", "shell"],
+  "tier": 1,
+  "mcp_servers": ["filesystem", "git_sync"],
+  "autonomy_level": "GOD_MODE"
+}

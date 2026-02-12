@@ -1,0 +1,91 @@
+{
+  "name": "Epsilon Prime Telegram Uplink v2",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "telegram-uplink",
+        "options": {}
+      },
+      "id": "webhook-node",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ],
+      "webhookId": "telegram-uplink"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:5000/v1/chat/completions",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ 'messages': [{ 'role': 'user', 'content': $json.body.message.text }], 'model': 'epsilon-prime-cli' }) }}",
+        "options": {}
+      },
+      "id": "ask-epsilon",
+      "name": "Ask Epsilon Prime",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{$node['Webhook'].json['body']['message']['chat']['id']}}",
+        "text": "={{$json.choices[0].message.content}}",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "reply-telegram",
+      "name": "Reply via Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        650,
+        300
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "QdDdSN8YnT9Ap8mx",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Ask Epsilon Prime",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ask Epsilon Prime": {
+      "main": [
+        [
+          {
+            "node": "Reply via Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  }
+}

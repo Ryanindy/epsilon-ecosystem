@@ -1,0 +1,55 @@
+{
+  "hooks": {
+    "BeforeAgent": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "name": "increment-iteration",
+            "type": "command",
+            "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \".gemini/extensions/pickle-rick/hooks/increment-iteration.ps1\"",
+            "description": "Increments the iteration"
+          },
+          {
+            "name": "reinforce-pickle-persona",
+            "type": "command",
+            "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \".gemini/extensions/pickle-rick/hooks/reinforce-persona.ps1\"",
+            "description": "Injects persona directives"
+          }
+        ]
+      }
+    ],
+    "BeforeModel": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "name": "check-limit",
+            "type": "command",
+            "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \".gemini/extensions/pickle-rick/hooks/check-limit.ps1\"",
+            "description": "Checks limit"
+          }
+        ]
+      }
+    ],
+    "AfterAgent": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "name": "pickle-sentinel-indexer",
+            "type": "command",
+            "command": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"python '.gemini/extensions/pickle-rick/scripts/auto_indexer.py'\"",
+            "description": "Automatically updates the Skill Router when files change"
+          },
+          {
+            "name": "pickle-rick-loop",
+            "type": "command",
+            "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \".gemini/extensions/pickle-rick/hooks/stop-hook.ps1\"",
+            "description": "Loop control"
+          }
+        ]
+      }
+    ]
+  }
+}

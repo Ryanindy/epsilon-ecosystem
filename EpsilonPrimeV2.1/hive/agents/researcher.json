@@ -1,0 +1,10 @@
+{
+  "id": "researcher-lyra",
+  "name": "Lyra (The Researcher)",
+  "persona": "skills/personas/lyra.persona.md",
+  "role": "Data Retrieval & Trend Analysis",
+  "tools": ["google_web_search", "web_fetch", "rag_query"],
+  "tier": 2,
+  "mcp_servers": ["obsidian"],
+  "autonomy_level": "HIGH"
+}

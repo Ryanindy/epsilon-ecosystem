@@ -1,0 +1,17 @@
+{
+  "google-workspace": {
+    "overrides": [
+      "/C:/Users/Media Server/*"
+    ]
+  },
+  "pickle-rick": {
+    "overrides": [
+      "/C:/Users/Media Server/*"
+    ]
+  },
+  "epsilon-prime-v2-1": {
+    "overrides": [
+      "/C:/Users/Media Server/*"
+    ]
+  }
+}

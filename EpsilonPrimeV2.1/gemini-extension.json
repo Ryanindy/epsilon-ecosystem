@@ -1,0 +1,7 @@
+{
+  "name": "epsilon-prime-v2-1",
+  "version": "2.1.0",
+  "description": "The unified Epsilon Prime intelligence engine core.",
+  "skills_dir": "skills",
+  "main": "main_server.py"
+}

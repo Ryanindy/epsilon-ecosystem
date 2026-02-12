@@ -1,0 +1,14 @@
+{
+  "apps": [
+    {
+      "name": "n8n-sovereign",
+      "script": "C:/Users/Media Server/AppData/Roaming/npm/node_modules/n8n/bin/n8n",
+      "args": "start",
+      "interpreter": "node",
+      "env": {
+        "WEBHOOK_URL": "https://mediaserver.taild49f5e.ts.net/",
+        "N8N_SKIP_WEBHOOK_DEREGISTRATION_SHUTDOWN": "true"
+      }
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "name": "Epsilon Prime Telegram Polling (Bulletproof)",
+  "nodes": [
+    {
+      "parameters": {
+        "interval": 1,
+        "unit": "minutes"
+      },
+      "name": "Interval Trigger",
+      "type": "n8n-nodes-base.interval",
+      "typeVersion": 1,
+      "position": [
+        100,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getUpdates",
+        "limit": 10,
+        "additionalFields": {}
+      },
+      "name": "Get Messages",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        300,
+        300
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "QdDdSN8YnT9Ap8mx"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "={{$json.message}}",
+        "options": {}
+      },
+      "name": "Split Messages",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        500,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n  let text = item.json.text || '';\n  text = text.replace(/[\"\\r\\n]/g, ' ').trim();\n  return {\n    json: {\n      ...item.json,\n      sanitized_text: text\n    }\n  };\n});"
+      },
+      "name": "Sanitize Input",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        700,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:5000/v1/chat/completions",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={ \"messages\": [ { \"role\": \"user\", \"content\": \"{{$json.sanitized_text}}\" } ], \"model\": \"epsilon-prime-v2.1\" }",
+        "options": {}
+      },
+      "name": "Hit Bridge",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        900,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{$node[\"Split Messages\"].json[\"chat\"][\"id\"]}}",
+        "text": "={{$json[\"choices\"][0][\"message\"][\"content\"]}}",
+        "options": {}
+      },
+      "name": "Reply to User",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        300
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "QdDdSN8YnT9Ap8mx"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Interval Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Messages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Messages": {
+      "main": [
+        [
+          {
+            "node": "Split Messages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Messages": {
+      "main": [
+        [
+          {
+            "node": "Sanitize Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sanitize Input": {
+      "main": [
+        [
+          {
+            "node": "Hit Bridge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hit Bridge": {
+      "main": [
+        [
+          {
+            "node": "Reply to User",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {}
+}
