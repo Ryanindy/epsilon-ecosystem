@@ -1,0 +1,9 @@
+{
+  "id": "agent-footprint",
+  "name": "Footprint (Spiderfoot Mapper)",
+  "persona": "skills/personas/jack_core.skill.md",
+  "role": "Passive & Active Footprinting",
+  "tools": ["run_spiderfoot"],
+  "tier": 3,
+  "autonomy_level": "TOOL_EXECUTOR"
+}

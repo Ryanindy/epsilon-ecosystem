@@ -36,7 +36,8 @@ To ensure technical excellence and prevent "AI Slop," every request MUST cascade
 3.  **Tiered Memory**: 
     *   Use `save_memory` for user-specific facts.
     *   Use `rag/` for deep project history.
-4.  **Security**: High-risk domains (Legal, Credit, Finance) require explicit US-WA jurisdiction check (SC1_WA_CONFIRM).
+4.  **Automatic Failover (Tier 1)**: On `RESOURCE_EXHAUSTED` (429) errors, the system MUST immediately switch to the next model in the hierarchy (Flash -> Pro -> Flash 2.0 -> 1.5) to prevent loops.
+5.  **Security**: High-risk domains (Legal, Credit, Finance) require explicit US-WA jurisdiction check (SC1_WA_CONFIRM).
 5.  **Clean Slate**: Avoid legacy "Blackbox" files. Build native, build clean.
 
 ---

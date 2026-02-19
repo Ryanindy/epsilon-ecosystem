@@ -1,0 +1,228 @@
+{
+  "agent_name": "Packet Generator",
+  "version": "1.0",
+  "description": "Creates standardized investor-facing deal packets for distribution",
+  
+  "system_prompt": "You are a Packet Generator agent that creates professional, investor-facing deal packets for wholesale and creative finance real estate opportunities. Your packets must be clear, transparent, scannable in under 3 minutes, and action-oriented. Follow the 7-section format strictly: Property Snapshot, Deal Summary Numbers, Investment Strategy, Financial Breakdown, Exit Scenarios, Risk & Assumptions, and Call to Action. Always be transparent about projections and include appropriate disclaimers.",
+  
+  "tools_required": [
+    "text_editor",
+    "shell"
+  ],
+  
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "confidence_score_output": {
+        "type": "object",
+        "properties": {
+          "overall_score": {"type": "number"},
+          "classification": {"type": "string"}
+        }
+      },
+      "deal_analysis": {
+        "type": "object",
+        "properties": {
+          "arv": {"type": "number"},
+          "repairs": {"type": "number"},
+          "mao": {"type": "number"},
+          "seller_offer": {"type": "number"},
+          "buyer_price": {"type": "number"},
+          "assignment_fee": {"type": "number"},
+          "strategy": {"type": "string"},
+          "assumptions": {"type": "array"}
+        }
+      },
+      "property_data": {
+        "type": "object",
+        "properties": {
+          "address": {"type": "string"},
+          "city": {"type": "string"},
+          "state": {"type": "string"},
+          "beds": {"type": "number"},
+          "baths": {"type": "number"},
+          "sqft": {"type": "number"},
+          "dom": {"type": "number"},
+          "description": {"type": "string"}
+        }
+      }
+    },
+    "required": ["confidence_score_output", "deal_analysis", "property_data"]
+  },
+  
+  "output_formats": [
+    "full_packet_pdf",
+    "email_html",
+    "sms_snippet",
+    "crm_json",
+    "social_post"
+  ],
+  
+  "packet_structure": {
+    "sections": [
+      {
+        "order": 1,
+        "name": "Property Snapshot",
+        "required_fields": [
+          "address_partial",
+          "property_type",
+          "beds_baths_sqft",
+          "occupancy_status",
+          "days_on_market"
+        ],
+        "purpose": "Quick orientation and motivation indicators"
+      },
+      {
+        "order": 2,
+        "name": "Deal Summary Numbers",
+        "required_fields": [
+          "contract_price",
+          "assignment_purchase_price",
+          "estimated_arv",
+          "estimated_repairs",
+          "projected_gross_profit"
+        ],
+        "purpose": "Critical financial snapshot"
+      },
+      {
+        "order": 3,
+        "name": "Investment Strategy",
+        "required_fields": [
+          "strategy_type",
+          "strategy_rationale",
+          "timeline_expectation"
+        ],
+        "purpose": "Recommended approach and why it fits"
+      },
+      {
+        "order": 4,
+        "name": "Financial Breakdown",
+        "required_fields": [
+          "purchase_price",
+          "rehab_budget_itemized",
+          "holding_costs",
+          "closing_costs",
+          "all_in_cost"
+        ],
+        "purpose": "Detailed cost structure"
+      },
+      {
+        "order": 5,
+        "name": "Exit Scenarios",
+        "required_fields": [
+          "flip_exit_numbers",
+          "rental_exit_numbers"
+        ],
+        "purpose": "Multiple profit paths"
+      },
+      {
+        "order": 6,
+        "name": "Risk & Assumptions",
+        "required_fields": [
+          "arv_source",
+          "repair_basis",
+          "market_disclaimers",
+          "due_diligence_notice"
+        ],
+        "purpose": "Transparent disclosure"
+      },
+      {
+        "order": 7,
+        "name": "Call to Action",
+        "required_fields": [
+          "qualification_requirements",
+          "contract_structure",
+          "response_process",
+          "contact_information"
+        ],
+        "purpose": "Clear next steps"
+      }
+    ]
+  },
+  
+  "distribution_tiers": {
+    "priority_deal": {
+      "score_range": "0.80-1.00",
+      "distribution": "Blast to full buyer list immediately",
+      "channels": ["email", "sms", "crm_push"]
+    },
+    "viable_deal": {
+      "score_range": "0.70-0.79",
+      "distribution": "Targeted to best-fit buyers first, then broader",
+      "channels": ["email", "crm_scheduled"]
+    },
+    "low_confidence": {
+      "score_range": "0.60-0.69",
+      "distribution": "Selective to serious/niche buyers only",
+      "channels": ["email_selective"]
+    }
+  },
+  
+  "compliance_rules": {
+    "address_disclosure": {
+      "before_nda": "City/state only",
+      "after_nda": "Full address and access"
+    },
+    "prohibited_claims": [
+      "Guaranteed profit",
+      "Can't lose",
+      "No risk"
+    ],
+    "required_language": [
+      "Projected",
+      "Estimated",
+      "Based on current data",
+      "Subject to change",
+      "Independent due diligence recommended"
+    ],
+    "state_specific": {
+      "IL": "Assignment disclosure required",
+      "OK": "Assignment disclosure required",
+      "PA": "Assignment disclosure required"
+    }
+  },
+  
+  "quality_checklist": [
+    "All numbers accurate and match underwriting",
+    "ARV is conservative and supported",
+    "Repair estimates reasonable",
+    "Profit margin viable for buyer",
+    "Risk disclosures present",
+    "Contact info correct",
+    "Grammar/spelling checked",
+    "Formatting clean and professional"
+  ],
+  
+  "template_example": {
+    "section_1_property_snapshot": "📍 Columbus, OH [Full address after NDA]\\n🏠 Single Family Home\\n🛏️ 3 Beds | 2 Baths | 1,400 sqft\\n📦 Vacant\\n⏱️ 52 Days on Market",
+    
+    "section_2_deal_summary": "💰 DEAL NUMBERS\\n\\nContract Price:       $165,000\\nYour Price:           $180,000\\nEstimated ARV:        $280,000\\nEstimated Repairs:    $35,000\\n─────────────────────────────\\nAll-In Cost:          $215,000\\nProjected Profit:     $40,000+ (Flip)",
+    
+    "section_3_strategy": "📈 RECOMMENDED STRATEGY: Cash Flip\\n\\nThis property is ideal for a quick cosmetic flip. The neighborhood is seeing strong buyer activity, with recent sales at $270-290k. Repairs are primarily cosmetic (paint, flooring, kitchen/bath updates). Expected project timeline: 60-90 days.",
+    
+    "section_4_breakdown": "📊 FINANCIAL BREAKDOWN\\n\\nPurchase Price:           $180,000\\nRehab Budget:             $35,000\\n  - Cosmetic/Paint:       $8,000\\n  - Flooring:             $7,000\\n  - Kitchen Updates:      $10,000\\n  - Bath Updates:         $6,000\\n  - Misc/Contingency:     $4,000\\nHolding Costs (90 days):  $4,500\\nClosing Costs:            $5,500\\n─────────────────────────────────\\nTOTAL ALL-IN:             $225,000",
+    
+    "section_5_exits": "🎯 EXIT SCENARIOS\\n\\nFLIP EXIT:\\nResale Price:         $275,000 (conservative)\\nSelling Costs (7%):   -$19,250\\nNet Proceeds:         $255,750\\nLess All-In:          -$225,000\\n────────────────────────────────\\nNET PROFIT:           $30,750",
+    
+    "section_6_risk": "⚠️ RISK & ASSUMPTIONS\\n\\n✓ ARV based on 4 comparable sales within 0.5 miles\\n✓ Repairs estimated from property photos\\n✓ Clean title assumed (search recommended)\\n✓ Market conditions subject to change\\n✓ Buyer should conduct independent due diligence",
+    
+    "section_7_cta": "✅ NEXT STEPS\\n\\nSerious opportunity for qualified buyers only.\\n\\nRequirements:\\n• Proof of funds OR financing pre-approval\\n• Ability to close within 21 days\\n• Property sold AS-IS\\n\\nContract: Assignment with $15,000 fee OR double-close\\n\\nInterested? Reply with proof of funds and timeline."
+  },
+  
+  "processing_steps": [
+    "1. Validate input data (confidence score ≥0.60 required)",
+    "2. Determine distribution tier based on confidence score",
+    "3. Generate Section 1: Property Snapshot",
+    "4. Generate Section 2: Deal Summary Numbers",
+    "5. Generate Section 3: Investment Strategy",
+    "6. Generate Section 4: Financial Breakdown",
+    "7. Generate Section 5: Exit Scenarios",
+    "8. Generate Section 6: Risk & Assumptions",
+    "9. Generate Section 7: Call to Action",
+    "10. Apply compliance checks (state-specific rules)",
+    "11. Run quality checklist validation",
+    "12. Format for requested output types (PDF/Email/SMS/JSON)",
+    "13. Save to output directory",
+    "14. Return packet ready for distribution"
+  ]
+}

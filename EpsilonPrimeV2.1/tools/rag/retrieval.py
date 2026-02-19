@@ -1,10 +1,17 @@
 import os
+import logging
 import chromadb
 from chromadb.utils import embedding_functions
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, TimeoutError
 
-# Configuration
-CHROMA_PATH = "rag/.chromadb"
+# --- PROJECT ROOT ---
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+# --- LOGGING ---
+logger = logging.getLogger("RAGRetrieval")
+
+# Configuration (ABSOLUTE PATH)
+CHROMA_PATH = os.path.join(PROJECT_ROOT, "rag", ".chromadb")
 # Threshold for relevance. 
 # ChromaDB by default uses squared L2 distance.
 # 0.0 is exact match. 
@@ -20,7 +27,7 @@ def query_collection(client, ef, coll_name, query_text, top_k):
             n_results=top_k,
             include=["documents", "metadatas", "distances"]
         )
-        
+
         if not results['ids'] or not results['ids'][0]:
             return []
 
@@ -29,10 +36,10 @@ def query_collection(client, ef, coll_name, query_text, top_k):
             doc = results['documents'][0][i]
             meta = results['metadatas'][0][i]
             dist = results['distances'][0][i]
-            
+
             # Heuristic: convert L2 distance to a 0-1 similarity score
             similarity = 1.0 / (1.0 + dist)
-            
+
             if similarity >= MIN_SIMILARITY_THRESHOLD:
                 coll_results.append({
                     "content": doc,
@@ -41,7 +48,8 @@ def query_collection(client, ef, coll_name, query_text, top_k):
                     "collection": coll_name
                 })
         return coll_results
-    except Exception:
+    except Exception as e:
+        logger.debug(f"Collection {coll_name} query failed: {e}")
         return []
 
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -50,16 +58,25 @@ from langchain_core.messages import HumanMessage, SystemMessage
 # ... (keep existing imports) ...
 
 def expand_query_hyde(query_text):
-    """Generates a hypothetical response to expand the query (HyDE)."""
-    try:
-        llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", google_api_key=os.getenv("GOOGLE_API_KEY"))
-        system_prompt = "You are a RAG Expansion engine. Generate a concise, information-dense hypothetical paragraph that answers the user's query. Do not include preambles."
-        messages = [SystemMessage(content=system_prompt), HumanMessage(content=query_text)]
-        response = llm.invoke(messages)
-        return f"{query_text}\n\n{response.content}"
-    except Exception as e:
-        print(f"[DEBUG] HyDE Expansion failed: {e}")
-        return query_text
+    """Generates a hypothetical response to expand the query (HyDE). Enforces failover."""
+    models = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash']
+    for model in models:
+        try:
+            llm = ChatGoogleGenerativeAI(
+                model=model, 
+                google_api_key=os.getenv("GOOGLE_API_KEY"),
+                max_retries=0
+            )
+            system_prompt = "You are a RAG Expansion engine. Generate a concise, information-dense hypothetical paragraph that answers the user's query. Do not include preambles."
+            messages = [SystemMessage(content=system_prompt), HumanMessage(content=query_text)]
+            response = llm.invoke(messages)
+            return f"{query_text}\n\n{response.content}"
+        except Exception as e:
+            if "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e):
+                continue
+            logger.debug(f"HyDE expansion failed for {model}: {e}")
+            continue
+    return query_text
 
 def get_rag_context(query_text, top_k=5, use_hyde=True):
     """
@@ -93,10 +110,18 @@ def get_rag_context(query_text, top_k=5, use_hyde=True):
     
     all_results = []
     
-    with ThreadPoolExecutor(max_workers=len(collections)) as executor:
-        futures = [executor.submit(query_collection, client, ef, name, query_text, top_k) for name in collections]
+    # Limit thread pool to prevent resource exhaustion
+    max_workers = min(len(collections), 4)
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = [executor.submit(query_collection, client, ef, name, search_text, top_k) for name in collections]
         for future in futures:
-            all_results.extend(future.result())
+            try:
+                result = future.result(timeout=30)  # 30 second timeout per collection
+                all_results.extend(result)
+            except TimeoutError:
+                logger.warning("Collection query timed out")
+            except Exception as e:
+                logger.error(f"Collection query error: {e}")
 
     # Sort by similarity descending
     all_results.sort(key=lambda x: x['similarity'], reverse=True)

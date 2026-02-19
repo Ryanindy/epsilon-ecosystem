@@ -1,0 +1,9 @@
+{
+  "id": "agent-web",
+  "name": "Web (Playwright Operator)",
+  "persona": "skills/personas/lyra.persona.md",
+  "role": "Interactive Web Scraping and Verification",
+  "tools": ["playwright_mcp", "query_cylect"],
+  "tier": 2,
+  "autonomy_level": "HIGH"
+}

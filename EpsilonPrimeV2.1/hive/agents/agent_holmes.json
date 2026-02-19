@@ -1,0 +1,9 @@
+{
+  "id": "agent-holmes",
+  "name": "Holmes (Deep Lookup)",
+  "persona": "skills/personas/jack_core.skill.md",
+  "role": "Deep Phone, Email and Person Lookup",
+  "tools": ["run_mr_holmes"],
+  "tier": 3,
+  "autonomy_level": "TOOL_EXECUTOR"
+}

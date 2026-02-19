@@ -1,0 +1,361 @@
+{
+  "agent_name": "Property Sourcing Agent",
+  "version": "1.0",
+  "description": "Autonomous daily property finder that scans markets and delivers 5 pre-qualified deals every morning",
+  
+  "system_prompt": "You are a Property Sourcing Agent that autonomously finds wholesale real estate opportunities. Your mission is to scan multiple property sources daily, score properties against buyer criteria, select the top 5 deals, run complete intelligence on each, and deliver a morning report with personalized scripts ready for immediate calling. You are the FIRST agent in the workflow - you CREATE the pipeline of deals, not just analyze existing ones.",
+  
+  "tools_required": [
+    "text_editor",
+    "shell",
+    "fetch",
+    "playwright"
+  ],
+  
+  "primary_function": "autonomous_daily_property_discovery",
+  
+  "workflow": {
+    "execution_schedule": "Daily at 6:00 AM",
+    "total_duration": "30-45 minutes",
+    "phases": [
+      {
+        "phase": 1,
+        "name": "Property Scanning",
+        "duration": "10-15 minutes",
+        "sources": [
+          "BuyCartel.com (primary)",
+          "Zillow distressed listings",
+          "Public records (foreclosures, tax delinquencies)",
+          "FSBO listings (Craigslist, Facebook)"
+        ]
+      },
+      {
+        "phase": 2,
+        "name": "Scoring & Filtering",
+        "duration": "3-5 minutes",
+        "process": "Score all properties 0-100, filter minimum threshold"
+      },
+      {
+        "phase": 3,
+        "name": "Top 5 Selection",
+        "duration": "1 minute",
+        "process": "Sort by score, select top 5"
+      },
+      {
+        "phase": 4,
+        "name": "Intelligence Gathering",
+        "duration": "15-20 minutes",
+        "process": "Run OSINT, Lead Qualifier, Deal Analyzer, Confidence Scorer on all 5"
+      },
+      {
+        "phase": 5,
+        "name": "Report Generation",
+        "duration": "2-3 minutes",
+        "process": "Generate morning report with all details"
+      },
+      {
+        "phase": 6,
+        "name": "Notification",
+        "duration": "30 seconds",
+        "process": "Send email/SMS to buyer"
+      }
+    ]
+  },
+  
+  "data_sources": {
+    "buycartel": {
+      "priority": "primary",
+      "type": "web_scraping",
+      "credentials_from_profile": true,
+      "search_parameters": [
+        "markets",
+        "price_range",
+        "property_types",
+        "motivation_signals"
+      ]
+    },
+    "zillow": {
+      "priority": "secondary",
+      "type": "api_or_scraping",
+      "focus": "long_dom_price_reductions_foreclosures"
+    },
+    "public_records": {
+      "priority": "secondary",
+      "type": "county_records_api",
+      "focus": "tax_delinquencies_foreclosures_probate"
+    },
+    "fsbo": {
+      "priority": "tertiary",
+      "type": "web_scraping",
+      "sources": ["craigslist", "fsbo.com", "facebook_marketplace"]
+    }
+  },
+  
+  "scoring_algorithm": {
+    "formula": "Total Score = (Buyer Match × 0.40) + (Motivation × 0.30) + (Equity Potential × 0.20) + (Market Liquidity × 0.10)",
+    
+    "buyer_match_component": {
+      "weight": 0.40,
+      "factors": [
+        "price_range_match (25%)",
+        "market_match (20%)",
+        "property_type_match (15%)",
+        "beds_baths_sqft_requirements (15%)",
+        "repair_tolerance (10%)",
+        "dom_requirement (10%)",
+        "strategy_match (5%)"
+      ]
+    },
+    
+    "motivation_component": {
+      "weight": 0.30,
+      "factors": [
+        "days_on_market (25%)",
+        "motivation_flags (25%)",
+        "price_reductions (20%)",
+        "occupancy_status (15%)",
+        "high_priority_signals (15%)"
+      ]
+    },
+    
+    "equity_potential_component": {
+      "weight": 0.20,
+      "formula": "spread_pct = ((ARV - list_price - repairs) / ARV) × 100",
+      "scoring": {
+        "40%+ spread": 1.0,
+        "30-40% spread": 0.85,
+        "25-30% spread": 0.75,
+        "20-25% spread": 0.60,
+        "<20% spread": 0.30
+      }
+    },
+    
+    "market_liquidity_component": {
+      "weight": 0.10,
+      "sweet_spot_range": "$150k-$300k",
+      "scoring_by_price": {
+        "$150k-$300k": 0.9,
+        "$100k-$150k or $300k-$400k": 0.7,
+        "$50k-$100k": 0.6,
+        "Other": 0.4
+      }
+    }
+  },
+  
+  "selection_criteria": {
+    "daily_limit": 5,
+    "minimum_score": 70,
+    "prioritization": [
+      "Highest total score",
+      "High priority motivation signals",
+      "Primary markets first",
+      "Newer listings preferred"
+    ]
+  },
+  
+  "intelligence_enrichment": {
+    "for_each_top_deal": [
+      {
+        "agent": "OSINT Agent",
+        "output": "owner_intelligence_report",
+        "includes": [
+          "owner_profile",
+          "motivation_signals",
+          "rapport_intelligence",
+          "urgency_score",
+          "communication_strategy"
+        ]
+      },
+      {
+        "agent": "Lead Qualifier",
+        "output": "lead_qualification_sheet",
+        "includes": [
+          "qualification_level",
+          "personalized_scripts",
+          "talking_points",
+          "next_steps"
+        ]
+      },
+      {
+        "agent": "Deal Analyzer",
+        "output": "deal_analysis",
+        "includes": [
+          "arv_calculation",
+          "repair_estimates",
+          "mao_calculation",
+          "seller_offer",
+          "buyer_price",
+          "assignment_fee",
+          "strategy"
+        ]
+      },
+      {
+        "agent": "Confidence Scorer",
+        "output": "confidence_score",
+        "includes": [
+          "overall_score",
+          "component_breakdown",
+          "classification",
+          "recommendation"
+        ]
+      },
+      {
+        "agent": "Packet Generator",
+        "output": "investor_packet",
+        "condition": "if confidence_score >= 0.60",
+        "includes": [
+          "property_snapshot",
+          "deal_numbers",
+          "strategy",
+          "financials",
+          "exit_scenarios",
+          "risk_assumptions",
+          "call_to_action"
+        ]
+      }
+    ]
+  },
+  
+  "output_structure": {
+    "morning_report": {
+      "location": "/output/daily_reports/",
+      "filename_format": "YYYYMMDD_HHMMSS_morning_report.txt",
+      "sections": [
+        "Summary Statistics",
+        "Deal #1 Complete Profile",
+        "Deal #2 Complete Profile",
+        "Deal #3 Complete Profile",
+        "Deal #4 Complete Profile",
+        "Deal #5 Complete Profile",
+        "Action Items"
+      ]
+    },
+    "individual_deal_files": {
+      "osint_reports": "/output/osint/YYYYMMDD_address.txt",
+      "lead_sheets": "/output/lead_sheets/YYYYMMDD_address.txt",
+      "deal_analyses": "/output/deals/YYYYMMDD_address/deal_analysis.json",
+      "confidence_scores": "/output/deals/YYYYMMDD_address/confidence_score.json",
+      "investor_packets": "/output/packets/YYYYMMDD_address_packet.pdf"
+    }
+  },
+  
+  "notification_system": {
+    "methods": ["email", "sms"],
+    "email_config": {
+      "smtp_server": "smtp.gmail.com",
+      "smtp_port": 587,
+      "sender": "configured_in_script",
+      "recipient": "from_buyer_profile",
+      "subject_format": "🎯 Your {count} Daily Deals Are Ready! - {date}",
+      "includes_summary": true,
+      "includes_link_to_report": true
+    },
+    "sms_config": {
+      "provider": "twilio",
+      "message_format": "🎯 {count} deals ready! Check email for details.",
+      "optional": true
+    }
+  },
+  
+  "automation_settings": {
+    "scheduler": "windows_task_scheduler",
+    "schedule_time": "06:00",
+    "wake_computer": true,
+    "run_missed_tasks": true,
+    "retry_on_failure": {
+      "enabled": true,
+      "max_attempts": 3,
+      "retry_interval_minutes": 15
+    }
+  },
+  
+  "performance_optimization": {
+    "caching": {
+      "enabled": true,
+      "cache_duration_hours": 24,
+      "cache_location": "/output/cache/",
+      "cached_items": [
+        "scraped_properties",
+        "osint_results",
+        "arv_estimates"
+      ]
+    },
+    "rate_limiting": {
+      "requests_per_minute": 30,
+      "delay_between_sources_seconds": 2
+    },
+    "parallel_processing": {
+      "enabled": false,
+      "max_workers": 3,
+      "use_for": ["osint_enrichment", "deal_analysis"]
+    }
+  },
+  
+  "error_handling": {
+    "logging": {
+      "enabled": true,
+      "log_file": "/logs/property_sourcing.log",
+      "log_level": "INFO",
+      "rotate_logs": true
+    },
+    "fallback_behavior": {
+      "if_buycartel_fails": "continue_with_other_sources",
+      "if_no_properties_found": "send_alert_email",
+      "if_enrichment_fails": "include_basic_data_only",
+      "minimum_deals_to_report": 1
+    }
+  },
+  
+  "compliance_and_ethics": {
+    "data_usage": "Only for Eric Frederick's wholesale business",
+    "respect_robots_txt": true,
+    "rate_limiting_enabled": true,
+    "no_unauthorized_access": true,
+    "osint_ethical_guidelines": "follow_all_guidelines_from_osint_agent"
+  },
+  
+  "integration_with_buyer_profile": {
+    "profile_file": "/config/buyer_profiles/buyer_001_eric_frederick.json",
+    "dynamic_loading": true,
+    "uses_from_profile": [
+      "markets",
+      "price_range",
+      "property_types",
+      "repair_tolerance",
+      "motivation_signals",
+      "strategy_preferences",
+      "daily_deal_limit",
+      "minimum_score_threshold",
+      "buycartel_credentials",
+      "notification_email"
+    ]
+  },
+  
+  "expected_daily_results": {
+    "properties_scanned": "50-150",
+    "properties_scored_above_threshold": "10-30",
+    "top_deals_selected": 5,
+    "deals_with_complete_intelligence": 5,
+    "morning_report_generated": true,
+    "notification_sent": true,
+    "total_execution_time_minutes": "30-45",
+    "ready_for_calling_by": "8:00 AM"
+  },
+  
+  "success_metrics": {
+    "track_weekly": [
+      "total_properties_scanned",
+      "average_score_of_top_5",
+      "deals_called",
+      "appointments_set",
+      "contracts_signed",
+      "conversion_rate"
+    ],
+    "goals": {
+      "properties_per_week": 350,
+      "deals_delivered_per_week": 35,
+      "appointments_per_week": 10,
+      "contracts_per_month": 4
+    }
+  }
+}

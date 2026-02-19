@@ -1,0 +1,197 @@
+{
+  "agent_name": "Confidence Scorer",
+  "version": "1.0",
+  "description": "Validates and ranks deals using numeric scoring model to ensure quality and reduce bias",
+  
+  "system_prompt": "You are a Confidence Scorer agent that objectively evaluates wholesale and creative finance real estate deals. Your role is to score deals from 0.00 to 1.00 across four weighted components: Seller Motivation (30%), Equity & Spread (30%), Deal Simplicity (20%), and Market Liquidity (20%). You must be conservative and objective, ensuring only viable deals (score ≥0.60) proceed to marketing. Deals scoring below 0.60 must be flagged for human review.",
+  
+  "tools_required": [
+    "text_editor",
+    "shell"
+  ],
+  
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "deal_analysis": {
+        "type": "object",
+        "properties": {
+          "arv": {"type": "number"},
+          "repairs": {"type": "number"},
+          "mao": {"type": "number"},
+          "seller_offer": {"type": "number"},
+          "buyer_price": {"type": "number"},
+          "assignment_fee": {"type": "number"},
+          "strategy": {"type": "string"},
+          "assumptions": {"type": "array"}
+        }
+      },
+      "property_data": {
+        "type": "object",
+        "properties": {
+          "address": {"type": "string"},
+          "city": {"type": "string"},
+          "state": {"type": "string"},
+          "list_price": {"type": "number"},
+          "dom": {"type": "number"},
+          "flags": {"type": "array"}
+        }
+      }
+    },
+    "required": ["deal_analysis", "property_data"]
+  },
+  
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "property_address": {"type": "string"},
+      "overall_score": {"type": "number", "minimum": 0, "maximum": 1},
+      "classification": {"type": "string", "enum": ["Priority Deal", "Viable Deal", "Human Review Required"]},
+      "component_scores": {
+        "type": "object",
+        "properties": {
+          "seller_motivation": {"type": "number"},
+          "equity_spread": {"type": "number"},
+          "deal_simplicity": {"type": "number"},
+          "market_liquidity": {"type": "number"}
+        }
+      },
+      "score_breakdown": {
+        "type": "object",
+        "properties": {
+          "seller_motivation_weight": {"type": "number"},
+          "equity_spread_weight": {"type": "number"},
+          "deal_simplicity_weight": {"type": "number"},
+          "market_liquidity_weight": {"type": "number"}
+        }
+      },
+      "strengths": {"type": "array", "items": {"type": "string"}},
+      "weaknesses": {"type": "array", "items": {"type": "string"}},
+      "recommendation": {"type": "string"},
+      "escalation_required": {"type": "boolean"}
+    },
+    "required": ["overall_score", "classification", "component_scores", "escalation_required"]
+  },
+  
+  "scoring_weights": {
+    "seller_motivation": 0.30,
+    "equity_spread": 0.30,
+    "deal_simplicity": 0.20,
+    "market_liquidity": 0.20
+  },
+  
+  "scoring_logic": {
+    "seller_motivation": {
+      "1.0": "Multiple strong indicators (3+ signals: long DOM, price reduction, vacancy, as-is, distress)",
+      "0.7_to_0.9": "Clear motivation (2 signals present)",
+      "0.4_to_0.6": "Moderate motivation (1 signal present)",
+      "0.0_to_0.3": "Weak or no motivation signals"
+    },
+    "equity_spread": {
+      "1.0": "Discount >30% to ARV, assignment fee >$20k, buyer margin >25%",
+      "0.7_to_0.9": "Discount 20-30%, assignment fee $15-20k, buyer margin 20-25%",
+      "0.4_to_0.6": "Discount 15-20%, assignment fee $10-15k, buyer margin 15-20%",
+      "0.0_to_0.3": "Discount <15%, assignment fee <$10k, buyer margin <15%"
+    },
+    "deal_simplicity": {
+      "1.0": "Clean wholesale deal, clear title, no complications",
+      "0.7_to_0.9": "Minor complexities, manageable issues",
+      "0.4_to_0.6": "Moderate complexity (creative finance, title work needed)",
+      "0.0_to_0.3": "High complexity (multiple liens, legal issues)"
+    },
+    "market_liquidity": {
+      "1.0": "Hot market, high demand price band ($150-400k), fast comp sales",
+      "0.7_to_0.9": "Good market activity, standard demand",
+      "0.4_to_0.6": "Moderate market, slower sales",
+      "0.0_to_0.3": "Slow market, weak demand"
+    }
+  },
+  
+  "classification_thresholds": {
+    "priority_deal": 0.80,
+    "viable_deal": 0.60,
+    "human_review": 0.59
+  },
+  
+  "processing_steps": [
+    "1. Load deal analysis and property data",
+    "2. Score Seller Motivation component (0.0-1.0)",
+    "3. Score Equity & Spread component (0.0-1.0)",
+    "4. Score Deal Simplicity component (0.0-1.0)",
+    "5. Score Market Liquidity component (0.0-1.0)",
+    "6. Calculate weighted final score",
+    "7. Classify deal (Priority/Viable/Review)",
+    "8. Document strengths and weaknesses",
+    "9. Generate recommendation",
+    "10. Set escalation flag if score <0.60",
+    "11. Output confidence score JSON",
+    "12. Route to next agent or human queue"
+  ],
+  
+  "decision_matrix": {
+    "score_0.90_plus": {
+      "auto_market": true,
+      "priority": "Critical",
+      "follow_up": "Immediate + Daily"
+    },
+    "score_0.80_to_0.89": {
+      "auto_market": true,
+      "priority": "High",
+      "follow_up": "Same day + Every 2 days"
+    },
+    "score_0.70_to_0.79": {
+      "auto_market": true,
+      "priority": "Standard",
+      "follow_up": "24hrs + Weekly"
+    },
+    "score_0.60_to_0.69": {
+      "auto_market": true,
+      "priority": "Low",
+      "follow_up": "48hrs + Bi-weekly"
+    },
+    "score_below_0.60": {
+      "auto_market": false,
+      "priority": "Review",
+      "follow_up": "Human decision"
+    }
+  },
+  
+  "validation_rules": {
+    "minimum_score": 0.60,
+    "component_range": [0.0, 1.0],
+    "weights_sum": 1.0,
+    "escalation_threshold": 0.60
+  },
+  
+  "example_scoring": {
+    "input": {
+      "property": "123 Oak St, Columbus, OH",
+      "dom": 52,
+      "flags": ["vacant", "price_reduction", "as_is"],
+      "arv": 280000,
+      "seller_offer": 165000,
+      "buyer_price": 180000,
+      "assignment_fee": 15000,
+      "strategy": "wholesale_cash"
+    },
+    "component_scores": {
+      "seller_motivation": 0.85,
+      "equity_spread": 0.75,
+      "deal_simplicity": 0.90,
+      "market_liquidity": 0.70
+    },
+    "calculation": {
+      "seller_motivation_weighted": "0.85 × 0.30 = 0.255",
+      "equity_spread_weighted": "0.75 × 0.30 = 0.225",
+      "deal_simplicity_weighted": "0.90 × 0.20 = 0.180",
+      "market_liquidity_weighted": "0.70 × 0.20 = 0.140",
+      "final_score": 0.80
+    },
+    "output": {
+      "overall_score": 0.80,
+      "classification": "Priority Deal",
+      "recommendation": "Proceed with aggressive pursuit and immediate marketing",
+      "escalation_required": false
+    }
+  }
+}

@@ -33,11 +33,20 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "http://localhost:5000/v1/chat/completions",
+        "url": "http://127.0.0.1:5000/v1/chat/completions",
         "sendBody": true,
         "specifyBody": "json",
         "jsonBody": "={{ JSON.stringify({ 'messages': [{ 'role': 'user', 'content': $json.user_text }], 'model': 'epsilon-prime-v2.1', 'user': $json.chat_id.toString() }) }}",
-        "options": {}
+        "options": {
+          "headerParametersUI": {
+            "parameter": [
+              {
+                "name": "Authorization",
+                "value": "Bearer epsilon-dev-key"
+              }
+            ]
+          }
+        }
       },
       "id": "ask-epsilon",
       "name": "Ask Epsilon Prime",
@@ -73,7 +82,7 @@
     {
       "parameters": {
         "chatId": "={{$node['Sanitize & Extract'].json['chat_id']}}",
-        "text": "⚠️ *Epsilon Prime Error*\n\nThe bridge at `localhost:5000` is currently unresponsive. Please verify the server status.",
+        "text": "⚠️ *Epsilon Prime Error*\n\nThe bridge at `127.0.0.1:5000` is currently unresponsive. Please verify the server status.",
         "additionalFields": {
           "parse_mode": "Markdown"
         }

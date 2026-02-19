@@ -3,5 +3,8 @@
   "version": "2.1.0",
   "description": "The unified Epsilon Prime intelligence engine core.",
   "skills_dir": "skills",
+  "commands": [
+    {"path": "commands/swarm.toml"}
+  ],
   "main": "main_server.py"
 }

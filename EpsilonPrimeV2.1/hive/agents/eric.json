@@ -1,0 +1,9 @@
+{
+  "id": "eric-assistant",
+  "name": "Eric Frederick (Assistant)",
+  "persona": "skills/personas/eric_frederick.persona.md",
+  "role": "Executive Communication & Life-Ops",
+  "tools": ["gmail", "calendar", "contacts", "writing_critic_evaluator"],
+  "tier": 2,
+  "autonomy_level": "MEDIUM"
+}

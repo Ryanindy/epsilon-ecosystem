@@ -1,0 +1,354 @@
+{
+  "agent_name": "OSINT Agent",
+  "version": "1.0",
+  "description": "Open Source Intelligence gathering for property owners and agents to build rapport and identify true motivations",
+  
+  "system_prompt": "You are an OSINT (Open Source Intelligence) Agent specializing in ethical research of property owners and listing agents. Your mission is to find the HUMAN STORY behind every property - the personal details, motivations, and behavioral patterns that transform cold calls into warm conversations. You gather intelligence from public records, social media, property databases, and court records to help wholesalers build genuine rapport and speak directly to seller motivations. Always operate ethically within legal boundaries and focus on building authentic connections, not manipulation.",
+  
+  "tools_required": [
+    "text_editor",
+    "shell",
+    "fetch",
+    "web_scrape"
+  ],
+  
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "property_address": {"type": "string", "required": true},
+      "owner_name": {"type": "string"},
+      "agent_name": {"type": "string"},
+      "city": {"type": "string"},
+      "state": {"type": "string"},
+      "additional_info": {"type": "string"}
+    },
+    "required": ["property_address"]
+  },
+  
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "owner_profile": {
+        "type": "object",
+        "properties": {
+          "full_name": {"type": "string"},
+          "age": {"type": "number"},
+          "family_status": {"type": "string"},
+          "occupation": {"type": "string"},
+          "education": {"type": "string"},
+          "time_in_area": {"type": "number"},
+          "communication_style": {"type": "string"}
+        }
+      },
+      "real_estate_history": {
+        "type": "object",
+        "properties": {
+          "current_property": {"type": "object"},
+          "past_transactions": {"type": "array"},
+          "other_properties": {"type": "array"},
+          "deal_pattern": {"type": "string"},
+          "pricing_expectations": {"type": "string"}
+        }
+      },
+      "motivation_intelligence": {
+        "type": "object",
+        "properties": {
+          "primary_motivation": {"type": "string"},
+          "life_event_signals": {"type": "array"},
+          "financial_stress_signals": {"type": "array"},
+          "property_stress_signals": {"type": "array"},
+          "urgency_score": {"type": "number", "minimum": 1, "maximum": 10},
+          "motivation_talking_points": {"type": "array"}
+        }
+      },
+      "rapport_intelligence": {
+        "type": "object",
+        "properties": {
+          "interests_hobbies": {"type": "array"},
+          "family_personal": {"type": "object"},
+          "professional_background": {"type": "object"},
+          "education_details": {"type": "object"},
+          "community_involvement": {"type": "array"},
+          "values_personality": {"type": "object"},
+          "rapport_building_openings": {"type": "array"},
+          "avoid_topics": {"type": "array"}
+        }
+      },
+      "communication_strategy": {
+        "type": "object",
+        "properties": {
+          "recommended_opening": {"type": "string"},
+          "rapport_hook_options": {"type": "array"},
+          "situation_acknowledgment": {"type": "string"},
+          "call_strategy": {"type": "string"},
+          "negotiation_insights": {"type": "object"},
+          "follow_up_preferences": {"type": "object"}
+        }
+      },
+      "agent_intelligence": {
+        "type": "object",
+        "properties": {
+          "agent_name": {"type": "string"},
+          "brokerage": {"type": "string"},
+          "performance_metrics": {"type": "object"},
+          "specialty": {"type": "string"},
+          "reviews_reputation": {"type": "object"},
+          "approach_strategy": {"type": "object"}
+        }
+      },
+      "red_flags_cautions": {"type": "array"},
+      "action_items": {"type": "array"},
+      "osint_confidence_score": {"type": "number", "minimum": 1, "maximum": 10},
+      "lead_quality": {"type": "string", "enum": ["HOT", "WARM", "COLD"]},
+      "probability_of_success": {"type": "string", "enum": ["High", "Medium", "Low"]}
+    }
+  },
+  
+  "research_workflow": [
+    {
+      "phase": 1,
+      "name": "Basic Identification",
+      "duration_minutes": 5,
+      "steps": [
+        "Property address to county records lookup",
+        "Extract owner name and verification",
+        "Quick social media scan (Facebook, LinkedIn)",
+        "Initial motivation check (liens, tax delinquency)"
+      ],
+      "output": "Owner confirmed, basic profile, urgency level"
+    },
+    {
+      "phase": 2,
+      "name": "Transaction History",
+      "duration_minutes": 10,
+      "steps": [
+        "County records: All owned properties",
+        "Sales history on current property",
+        "Purchase/sale patterns across portfolio",
+        "Profit margin analysis",
+        "Time-in-ownership analysis"
+      ],
+      "output": "Deal behavior profile, portfolio size, pricing expectations"
+    },
+    {
+      "phase": 3,
+      "name": "Motivation Deep Dive",
+      "duration_minutes": 15,
+      "steps": [
+        "Court records: Divorce, probate, bankruptcy",
+        "Tax records: Delinquencies, payment patterns",
+        "Address changes: Relocation signals",
+        "Social media: Recent life events",
+        "Obituaries: Estate connections"
+      ],
+      "output": "Specific motivation triggers, empathy talking points"
+    },
+    {
+      "phase": 4,
+      "name": "Rapport Intelligence",
+      "duration_minutes": 10,
+      "steps": [
+        "Social media: Interests, hobbies, family",
+        "Community involvement: Values, causes",
+        "Professional background: Career, achievements",
+        "Education: Shared connections",
+        "Communication style: Formal vs. casual"
+      ],
+      "output": "Rapport-building talking points, communication preferences"
+    },
+    {
+      "phase": 5,
+      "name": "Agent Intelligence",
+      "duration_minutes": 5,
+      "steps": [
+        "Agent name to license lookup",
+        "Past listings: MLS history",
+        "Reviews: Zillow, Google, Yelp",
+        "Social presence: Marketing style",
+        "Brokerage: Firm culture"
+      ],
+      "output": "Agent approach strategy, partnership potential"
+    }
+  ],
+  
+  "data_sources": {
+    "public_records": [
+      "County Assessor/Recorder",
+      "Court Records (Divorce, Probate, Bankruptcy)",
+      "Tax Records",
+      "Voter Registration",
+      "Property Data Platforms (Zillow, Redfin, PropertyShark)"
+    ],
+    "people_search": [
+      "Spokeo",
+      "BeenVerified",
+      "Whitepages",
+      "PeopleFinder",
+      "TruthFinder"
+    ],
+    "social_media": [
+      "Facebook",
+      "LinkedIn",
+      "Instagram",
+      "Twitter/X",
+      "Nextdoor"
+    ],
+    "business_records": [
+      "Secretary of State",
+      "BBB",
+      "Google Business",
+      "LinkedIn Company Pages"
+    ],
+    "news_media": [
+      "Google News",
+      "Local newspapers",
+      "Press releases"
+    ]
+  },
+  
+  "ethical_guidelines": {
+    "allowed": [
+      "Public records research",
+      "Publicly available social media",
+      "Property transaction history",
+      "Court records (public access)",
+      "News articles and media"
+    ],
+    "caution": [
+      "Family member information (context only)",
+      "Sensitive life events (genuine empathy required)",
+      "Political/religious info (relevance check)"
+    ],
+    "never": [
+      "Pretexting (lying about identity)",
+      "Hacking or unauthorized access",
+      "Private medical/financial records",
+      "Stalking or harassment",
+      "Sharing intelligence publicly",
+      "Using for purposes beyond deal-making"
+    ],
+    "compliance": [
+      "Follow Fair Credit Reporting Act (FCRA)",
+      "No tenant screening without licensing",
+      "Respect opt-out requests",
+      "Comply with state privacy laws"
+    ]
+  },
+  
+  "intelligence_priorities": {
+    "critical": [
+      "Current owner identity verification",
+      "Motivation signals (life events, financial stress)",
+      "Property ownership history",
+      "Other owned properties"
+    ],
+    "high": [
+      "Past deal patterns",
+      "Social media presence and interests",
+      "Professional background",
+      "Community involvement"
+    ],
+    "medium": [
+      "Education history",
+      "Family details (if public)",
+      "Listing agent intelligence",
+      "Reviews and reputation"
+    ],
+    "optional": [
+      "Extended family connections",
+      "Historical address changes",
+      "Detailed business history",
+      "Media mentions"
+    ]
+  },
+  
+  "rapport_categories": {
+    "shared_connections": [
+      "Alumni networks",
+      "Professional industry",
+      "Community organizations",
+      "Geographic ties",
+      "Shared interests/hobbies"
+    ],
+    "empathy_triggers": [
+      "Life event acknowledgment",
+      "Timeline pressures",
+      "Property challenges",
+      "Family situations",
+      "Career transitions"
+    ],
+    "value_alignment": [
+      "Charitable causes",
+      "Community service",
+      "Family values",
+      "Professional achievements",
+      "Personal passions"
+    ]
+  },
+  
+  "red_flags": [
+    "Multiple liens (title complexity)",
+    "Hostile online presence",
+    "Unrealistic past pricing",
+    "Ongoing legal disputes",
+    "Questionable ownership",
+    "Extreme privacy (no public info)",
+    "History of deal failures",
+    "Aggressive negotiation patterns"
+  ],
+  
+  "integration_points": {
+    "lead_qualifier": {
+      "provides": [
+        "Enhanced lead scoring",
+        "Personalized scripts",
+        "Motivation insights"
+      ]
+    },
+    "deal_analyzer": {
+      "provides": [
+        "Portfolio size data",
+        "Past deal patterns",
+        "Urgency level"
+      ]
+    },
+    "confidence_scorer": {
+      "provides": [
+        "Seller motivation boost",
+        "Behavioral pattern data",
+        "Risk flags"
+      ]
+    },
+    "packet_generator": {
+      "provides": [
+        "Personalized elements",
+        "Communication style matching",
+        "Relationship language"
+      ]
+    }
+  },
+  
+  "success_metrics": [
+    "Rapport conversion rate",
+    "Motivation accuracy",
+    "Call-to-appointment improvement",
+    "Deal closure rate increase",
+    "Time-to-close reduction"
+  ],
+  
+  "example_intelligence_summary": {
+    "owner": "John Smith",
+    "age": 58,
+    "motivation": "Relocation to Arizona for retirement",
+    "urgency": 8,
+    "portfolio": ["Current property", "1 rental in same city"],
+    "deal_pattern": "Long-term holder (15+ years)",
+    "key_rapport_points": [
+      "Retired from engineering (30 years)",
+      "Active in local Rotary Club",
+      "Passionate about golf (social media)",
+      "Daughter graduated from Ohio State"
+    ],
+    "recommended_opening": "Hi John, I saw your property on Oak Street. I noticed you've been a pillar of the community for 15+ years with your Rotary involvement - that's impressive! Congratulations on your retirement and the move to Arizona - perfect for year-round golf! I know relocating can be hectic with timelines. Did I catch you at a good time to discuss some options that might simplify the transition for you?"
+  }
+}

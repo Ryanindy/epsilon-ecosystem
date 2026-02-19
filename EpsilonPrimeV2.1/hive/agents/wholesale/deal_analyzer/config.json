@@ -1,0 +1,140 @@
+{
+  "agent_name": "Deal Analyzer",
+  "version": "1.0",
+  "description": "Analyzes real estate listings and structures wholesale/creative finance deals",
+  
+  "system_prompt": "You are a Deal Analyzer agent specializing in wholesale real estate and creative finance. Your role is to evaluate property listings, calculate accurate financial projections, and structure deals that maximize assignment fees while preserving investor profitability. You must follow conservative underwriting principles and always ensure buyer profit margins remain viable. Reference the knowledge base for formulas, deal principles, and compliance rules.",
+  
+  "tools_required": [
+    "text_editor",
+    "shell"
+  ],
+  
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "address": {"type": "string"},
+      "city": {"type": "string"},
+      "state": {"type": "string"},
+      "list_price": {"type": "number"},
+      "beds": {"type": "number"},
+      "baths": {"type": "number"},
+      "sqft": {"type": "number"},
+      "dom": {"type": "number"},
+      "description": {"type": "string"},
+      "flags": {"type": "array", "items": {"type": "string"}}
+    },
+    "required": ["address", "city", "state", "list_price", "sqft", "dom"]
+  },
+  
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "arv": {"type": "number"},
+      "repairs": {"type": "number"},
+      "mao": {"type": "number"},
+      "seller_offer": {"type": "number"},
+      "buyer_price": {"type": "number"},
+      "assignment_fee": {"type": "number"},
+      "strategy": {"type": "string", "enum": ["wholesale_cash", "seller_finance", "subject_to", "creative_hybrid"]},
+      "confidence_score": {"type": "number", "minimum": 0, "maximum": 1},
+      "assumptions": {"type": "array", "items": {"type": "string"}}
+    },
+    "required": ["arv", "repairs", "mao", "seller_offer", "buyer_price", "assignment_fee", "strategy", "assumptions"]
+  },
+  
+  "processing_steps": [
+    "1. Load property input data",
+    "2. Identify deal signals and seller motivation indicators",
+    "3. Calculate ARV using conservative comparable sales",
+    "4. Estimate repair costs based on condition description",
+    "5. Calculate MAO: ARV × 0.75 - Repairs - $8,000",
+    "6. Determine optimal deal strategy",
+    "7. Structure seller offer and buyer price",
+    "8. Calculate assignment fee (minimum $10,000)",
+    "9. Validate buyer profit margin (minimum 20% ROI)",
+    "10. Check state compliance requirements",
+    "11. Document all assumptions",
+    "12. Generate deal_analysis.json output",
+    "13. Pass to Confidence Scorer"
+  ],
+  
+  "validation_rules": {
+    "arv_requirement": "Must be estimated conservatively using comparable sales",
+    "assignment_fee_minimum": 10000,
+    "buyer_roi_minimum": 0.20,
+    "confidence_threshold": 0.60,
+    "high_risk_states": ["IL", "OK", "PA"]
+  },
+  
+  "knowledge_base_files": [
+    "/knowledge_base/equations.csv",
+    "/knowledge_base/knowledge_base.json",
+    "/knowledge_base/state_rules.md",
+    "/knowledge_base/checklist_mastery.md"
+  ],
+  
+  "decision_logic": {
+    "strategy_selection": {
+      "wholesale_cash": {
+        "conditions": [
+          "Equity spread > 25% of ARV",
+          "DOM > 30 OR price reductions present",
+          "Clean deal structure"
+        ]
+      },
+      "seller_finance": {
+        "conditions": [
+          "Equity > 60% of value",
+          "No mortgage urgency",
+          "Seller mentions flexibility or monthly income"
+        ]
+      },
+      "subject_to": {
+        "conditions": [
+          "Equity < 20%",
+          "Existing loan rate < 6%",
+          "Seller has payment stress"
+        ]
+      },
+      "creative_hybrid": {
+        "conditions": [
+          "Mixed equity situation",
+          "Multiple liens present",
+          "Complex seller needs"
+        ]
+      }
+    }
+  },
+  
+  "example_workflow": {
+    "input": {
+      "address": "123 Oak Street",
+      "city": "Columbus",
+      "state": "OH",
+      "list_price": 180000,
+      "beds": 3,
+      "baths": 2,
+      "sqft": 1400,
+      "dom": 52,
+      "description": "Needs cosmetic updates, vacant, motivated seller",
+      "flags": ["vacant", "price_reduction", "as_is"]
+    },
+    "output": {
+      "arv": 280000,
+      "repairs": 35000,
+      "mao": 167000,
+      "seller_offer": 165000,
+      "buyer_price": 180000,
+      "assignment_fee": 15000,
+      "strategy": "wholesale_cash",
+      "confidence_score": 0.78,
+      "assumptions": [
+        "ARV based on 4 comparable sales within 0.5 miles",
+        "Cosmetic repairs estimated at $25/sqft",
+        "Assignment fee preserves $30k+ buyer profit",
+        "High motivation indicated by 52 DOM and price reduction"
+      ]
+    }
+  }
+}

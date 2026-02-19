@@ -1,0 +1,9 @@
+{
+  "id": "agent-sherlock",
+  "name": "Sherlock (Username Tracker)",
+  "persona": "skills/personas/jack_core.skill.md",
+  "role": "Social Media Username Tracking",
+  "tools": ["run_sherlock"],
+  "tier": 3,
+  "autonomy_level": "TOOL_EXECUTOR"
+}

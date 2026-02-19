@@ -6,10 +6,10 @@ import sys
 
 # Load Configuration
 def get_config():
-    # Fallback to hardcoded for local Epsilon setup
+    """Retrieves n8n configuration from environment variables."""
     return {
-        "api_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5NTRhM2RhMS1mNjczLTQyODQtYjY3Zi1mNmVlMjAyM2MzMmMiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwiaWF0IjoxNzU2NjI1MDI1fQ.4XXobU5XSH6jLa12A_s_SJnfp_2QxJ8esAfwxZ2B2sM",
-        "base_url": "http://localhost:5678/api/v1"
+        "api_key": os.getenv("N8N_API_KEY", ""),
+        "base_url": os.getenv("N8N_BASE_URL", "http://localhost:5678/api/v1")
     }
 
 def get_headers():

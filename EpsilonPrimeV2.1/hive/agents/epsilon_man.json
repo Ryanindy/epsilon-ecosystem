@@ -1,0 +1,9 @@
+{
+  "id": "epsilon-man-agent",
+  "name": "Epsilon Man",
+  "persona": "skills/personas/epsilon_man.persona.md",
+  "role": "Philosophical Drafting & Strategic Directives",
+  "tools": ["rag_query", "writing_critic_evaluator"],
+  "tier": 2,
+  "autonomy_level": "MEDIUM"
+}

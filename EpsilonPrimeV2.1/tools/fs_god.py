@@ -3,6 +3,7 @@ import platform
 import subprocess
 import sys
 import urllib.request
+import urllib.parse
 from typing import List, Optional
 
 def scan_host_drives() -> List[str]:
@@ -69,11 +70,19 @@ def list_host_directory(path: str) -> str:
     except Exception as e:
         return f"Error: Unable to list directory {path}. {str(e)}"
 
+import shlex
+
 def download_to_host(url: str, dest_path: str) -> str:
     """
     Downloads a file from a URL directly to the host system at the specified path.
+    Only http and https schemes are permitted.
     """
     try:
+        # Security check: Only allow http and https
+        parsed_url = urllib.parse.urlparse(url)
+        if parsed_url.scheme not in ['http', 'https']:
+            return f"Error: Unauthorized URL scheme '{parsed_url.scheme}'. Only http and https are allowed."
+
         os.makedirs(os.path.dirname(dest_path), exist_ok=True)
         urllib.request.urlretrieve(url, dest_path)
         return f"Success: Downloaded {url} to {dest_path}"
@@ -83,10 +92,11 @@ def download_to_host(url: str, dest_path: str) -> str:
 def inject_and_run(command: str, working_dir: Optional[str] = None) -> str:
     """
     Injects and executes a shell command on the host system. 
-    WARNING: This allows remote code execution. Use with extreme caution.
+    Uses shell=False for security.
     """
     try:
-        result = subprocess.run(command, shell=True, capture_output=True, text=True, cwd=working_dir)
+        args = shlex.split(command)
+        result = subprocess.run(args, shell=False, capture_output=True, text=True, cwd=working_dir)
         return f"STDOUT:\n{result.stdout}\nSTDERR:\n{result.stderr}\nExit Code: {result.returncode}"
     except Exception as e:
         return f"Error: Failed to execute command. {str(e)}"

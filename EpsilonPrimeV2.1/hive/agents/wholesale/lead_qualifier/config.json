@@ -1,0 +1,237 @@
+{
+  "agent_name": "Lead Qualifier",
+  "version": "1.0",
+  "description": "Conducts seller discovery, qualification, and generates scripts and lead sheets",
+  
+  "system_prompt": "You are a Lead Qualifier agent specializing in wholesale real estate lead generation and qualification. Your role is to help assess seller situations, generate appropriate conversation scripts, create detailed lead sheets, and score lead quality (Hot/Warm/Cold). You excel at identifying motivation signals, creative finance opportunities, and red flags. Always prioritize empathy and active listening in your script recommendations.",
+  
+  "tools_required": [
+    "text_editor",
+    "shell"
+  ],
+  
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "lead_source": {"type": "string", "enum": ["mls", "fsbo", "craigslist", "facebook", "cold_call", "referral", "other"]},
+      "property_address": {"type": "string"},
+      "seller_name": {"type": "string"},
+      "seller_phone": {"type": "string"},
+      "seller_email": {"type": "string"},
+      "dom": {"type": "number"},
+      "list_price": {"type": "number"},
+      "property_condition": {"type": "string"},
+      "initial_notes": {"type": "string"}
+    },
+    "required": ["property_address"]
+  },
+  
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "qualification_level": {"type": "string", "enum": ["HOT", "WARM", "COLD", "DISQUALIFIED"]},
+      "qualification_score": {"type": "number", "minimum": 1, "maximum": 10},
+      "recommended_script": {"type": "string"},
+      "lead_sheet": {"type": "object"},
+      "motivation_indicators": {"type": "array", "items": {"type": "string"}},
+      "red_flags": {"type": "array", "items": {"type": "string"}},
+      "opportunity_signals": {"type": "array", "items": {"type": "string"}},
+      "recommended_strategy": {"type": "string"},
+      "next_steps": {"type": "array", "items": {"type": "string"}},
+      "follow_up_cadence": {"type": "string"}
+    },
+    "required": ["qualification_level", "qualification_score", "recommended_script", "lead_sheet"]
+  },
+  
+  "qualification_scoring": {
+    "hot_lead_criteria": [
+      "Timeline urgency (foreclosure, job relocation, divorce)",
+      "Property vacant or problematic tenant",
+      "Open to creative terms or flexible on price",
+      "DOM > 45 days with price reduction",
+      "Seller indicates 'just want it sold'"
+    ],
+    "warm_lead_criteria": [
+      "Moderate motivation",
+      "DOM 20-45 days",
+      "Willing to listen to options",
+      "Some flexibility on terms or price",
+      "Asking follow-up questions"
+    ],
+    "cold_lead_criteria": [
+      "No urgency (testing market)",
+      "Unrealistic price expectations",
+      "Not open to creative options",
+      "Recently listed with high price"
+    ],
+    "disqualification_criteria": [
+      "Perfect condition at market price (no spread)",
+      "Completely inflexible on price/terms",
+      "Unresolvable title issues",
+      "Won't provide access or information",
+      "Hostile or uncooperative"
+    ]
+  },
+  
+  "script_types": {
+    "standard_opening": "General opening for initial contact",
+    "motivated_seller_opening": "For long DOM or price reductions",
+    "fsbo_opening": "For sale by owner approach",
+    "discovery_questions": "Motivation and situation assessment",
+    "seller_finance_pivot": "Introducing seller financing option",
+    "subject_to_pivot": "Explaining subject-to strategy",
+    "lease_option_pivot": "Presenting lease-option approach",
+    "objection_handling": "Responding to common objections"
+  },
+  
+  "lead_sheet_sections": [
+    "property_information",
+    "seller_information",
+    "situation_assessment",
+    "motivation_indicators",
+    "seller_motivation_level",
+    "key_notes",
+    "creative_finance_interest",
+    "red_flags",
+    "opportunity_signals",
+    "next_steps",
+    "recommended_strategy",
+    "estimated_deal_potential",
+    "follow_up_cadence",
+    "agent_notes"
+  ],
+  
+  "motivation_signals": {
+    "financial_distress": [
+      "Behind on payments",
+      "Foreclosure pending",
+      "Bankruptcy mentioned",
+      "Need cash urgently"
+    ],
+    "life_events": [
+      "Divorce/separation",
+      "Death in family/inheritance",
+      "Job relocation",
+      "Health issues",
+      "Family size change"
+    ],
+    "property_issues": [
+      "Major repairs needed",
+      "Tenant problems",
+      "Vacancy costs mounting",
+      "Code violations",
+      "Can't afford repairs"
+    ],
+    "market_factors": [
+      "Long time on market (>30 days)",
+      "Multiple price reductions",
+      "No offers or low offers",
+      "Expired listing",
+      "For sale by owner struggling"
+    ]
+  },
+  
+  "creative_finance_indicators": {
+    "seller_finance_signals": [
+      "High equity (>60%)",
+      "No mortgage urgency",
+      "Mentions 'monthly income' interest",
+      "Says 'no rush to sell'",
+      "Retirement age"
+    ],
+    "subject_to_signals": [
+      "Low equity (<20%)",
+      "Behind on payments",
+      "Good interest rate (<6%)",
+      "Needs relief from payments",
+      "Facing foreclosure"
+    ],
+    "lease_option_signals": [
+      "Vacant property",
+      "Can't afford to keep",
+      "Wants income but not ready to sell",
+      "Market is slow",
+      "Flexible timeline"
+    ]
+  },
+  
+  "follow_up_cadences": {
+    "HOT": {
+      "first_follow_up": "Within 2 hours",
+      "sequence": "Daily contact until offer made or disqualified"
+    },
+    "WARM": {
+      "first_follow_up": "Within 24 hours",
+      "sequence": "Follow up every 3-5 days for 2 weeks, then weekly"
+    },
+    "COLD": {
+      "first_follow_up": "Within 1 week",
+      "sequence": "Monthly nurture sequence"
+    }
+  },
+  
+  "processing_steps": [
+    "1. Receive lead data (property, seller, situation)",
+    "2. Analyze motivation signals present",
+    "3. Identify red flags and opportunity signals",
+    "4. Score qualification level (1-10)",
+    "5. Classify as HOT/WARM/COLD/DISQUALIFIED",
+    "6. Select appropriate script type",
+    "7. Generate customized call script",
+    "8. Create complete lead sheet",
+    "9. Recommend deal strategy approach",
+    "10. Define next steps and follow-up cadence",
+    "11. Output to CRM or pass to Deal Analyzer if HOT"
+  ],
+  
+  "best_practices": [
+    "Active listening - let seller talk",
+    "Mirror seller's language back to them",
+    "Show empathy before offering solutions",
+    "Ask permission before asking questions",
+    "Introduce creative finance only after rapport",
+    "Keep conversation natural, not salesy",
+    "Document everything immediately after call",
+    "Fast follow-up on hot leads (within 2 hours)"
+  ],
+  
+  "example_workflow": {
+    "input": {
+      "lead_source": "mls",
+      "property_address": "456 Elm Street, Columbus, OH",
+      "seller_name": "John Smith",
+      "seller_phone": "614-555-1234",
+      "dom": 58,
+      "list_price": 175000,
+      "property_condition": "Needs cosmetic work",
+      "initial_notes": "Price reduced twice, listing says 'motivated seller, as-is'"
+    },
+    "output": {
+      "qualification_level": "HOT",
+      "qualification_score": 8.5,
+      "motivation_indicators": [
+        "Long DOM (58 days)",
+        "Multiple price reductions",
+        "As-is language",
+        "Motivated seller stated"
+      ],
+      "opportunity_signals": [
+        "High motivation indicated",
+        "Property needs work (potential spread)",
+        "Long market time suggests flexibility"
+      ],
+      "red_flags": [],
+      "recommended_strategy": "wholesale_cash or seller_finance if high equity",
+      "recommended_script": "motivated_seller_opening",
+      "next_steps": [
+        "Call within 2 hours",
+        "Use motivated seller script",
+        "Ask discovery questions about situation",
+        "Get mortgage balance and equity info",
+        "Present creative options if appropriate",
+        "Schedule property viewing if interested"
+      ],
+      "follow_up_cadence": "Daily until offer made or disqualified"
+    }
+  }
+}

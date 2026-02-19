@@ -1,0 +1,9 @@
+{
+  "id": "agent-harvester",
+  "name": "Harvester (Data Scraper)",
+  "persona": "skills/personas/jack_core.skill.md",
+  "role": "Email and Domain Intelligence",
+  "tools": ["run_theharvester", "run_recon_cli"],
+  "tier": 3,
+  "autonomy_level": "TOOL_EXECUTOR"
+}
