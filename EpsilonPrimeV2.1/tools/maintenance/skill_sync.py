@@ -10,6 +10,10 @@ SOURCE_DIR = os.path.join(PROJECT_ROOT, "skills")
 DEST_DIR = os.path.join(PROJECT_ROOT, ".gemini", "skills")
 RAG_INGEST_SCRIPT = os.path.join(PROJECT_ROOT, "tools", "rag", "ingest.py")
 
+# Force UTF-8 for Windows Consoles
+if sys.platform == "win32":
+    sys.stdout.reconfigure(encoding='utf-8')
+
 def get_file_hash(path):
     with open(path, 'rb') as f:
         return hashlib.md5(f.read()).hexdigest()
