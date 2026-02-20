@@ -109,10 +109,8 @@ def generate_ai_response(sender_number: str, user_message: str, context: Union[L
     # --- SILENT CASCADE & MODEL FALLBACK ---
     MODELS_TO_TRY = [
         'gemini-2.0-flash',
-        'gemini-2.0-flash-lite',
-        'gemini-exp-1206',
-        'gemini-flash-latest',
-        'gemini-pro-latest'
+        'gemini-1.5-pro',
+        'gemini-1.5-flash'
     ]
     
     last_error = None

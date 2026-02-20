@@ -1,15 +1,20 @@
-﻿import os
+import os
 import time
 import json
 import glob
+import sys
 
-# CONFIG
+# CONFIG (Resolved relative to script location)
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+EXT_DIR = os.path.dirname(SCRIPT_DIR)
+PROJECT_ROOT = os.path.dirname(os.path.dirname(EXT_DIR))
+
 SKILL_DIRS = [
-    r"C:\Users\Media Server\.gemini\skills",
-    r"C:\Users\Media Server\.gemini\extensions\pickle-rick\skills"
+    os.path.join(PROJECT_ROOT, "skills"),
+    os.path.join(EXT_DIR, "skills")
 ]
-ROUTER_FILE = r"C:\Users\Media Server\.gemini\memory\10_SKILL_ROUTER.md"
-STATE_FILE = r"C:\Users\Media Server\.gemini\extensions\pickle-rick\scripts\.indexer_state"
+ROUTER_FILE = os.path.join(PROJECT_ROOT, "skills", "10_SKILL_ROUTER.md")
+STATE_FILE = os.path.join(SCRIPT_DIR, ".indexer_state")
 
 def get_skills():
     skills = []
@@ -50,37 +55,41 @@ def generate_router(skills):
             content += f"* **{clean_name}** -> `{i['path']}`\n"
         content += "\n"
         
+    # Ensure skills dir exists
+    os.makedirs(os.path.dirname(ROUTER_FILE), exist_ok=True)
     with open(ROUTER_FILE, "w", encoding="utf-8") as f:
         f.write(content)
 
 def main():
-    # Check mtimes
-    latest_mtime = 0
-    for d in SKILL_DIRS:
-        for root, _, files in os.walk(d):
-            for f in files:
-                if f.endswith(".md"):
-                    m = os.path.getmtime(os.path.join(root, f))
-                    if m > latest_mtime: latest_mtime = m
-    
-    # Check last run
-    last_run = 0
-    if os.path.exists(STATE_FILE):
-        with open(STATE_FILE, "r") as f:
-            last_run = float(f.read().strip())
-            
-    if latest_mtime > last_run:
-        # Print to stderr for visibility without breaking hook JSON protocol
-        print(f"âš  [Pickle Sentinel] Detected changes. Re-indexing skills...", file=sys.stderr)
-        skills = get_skills()
-        generate_router(skills)
-        with open(STATE_FILE, "w") as f:
-            f.write(str(time.time()))
-        print(f"âœ… [Pickle Sentinel] Router Updated: {len(skills)} skills indexed.", file=sys.stderr)
+    try:
+        # Check mtimes
+        latest_mtime = 0
+        for d in SKILL_DIRS:
+            if not os.path.exists(d): continue
+            for root, _, files in os.walk(d):
+                for f in files:
+                    if f.endswith(".md"):
+                        m = os.path.getmtime(os.path.join(root, f))
+                        if m > latest_mtime: latest_mtime = m
+        
+        # Check last run
+        last_run = 0
+        if os.path.exists(STATE_FILE):
+            with open(STATE_FILE, "r") as f:
+                last_run = float(f.read().strip())
+                
+        if latest_mtime > last_run:
+            # Print to stderr for visibility
+            print(f"[*] [Pickle Sentinel] Re-indexing skills...", file=sys.stderr)
+            skills = get_skills()
+            generate_router(skills)
+            with open(STATE_FILE, "w") as f:
+                f.write(str(time.time()))
+    except Exception as e:
+        print(f"[!] [Pickle Sentinel] Indexing Error: {e}", file=sys.stderr)
     
     # Always output allow decision for CLI hook protocol
     print('{"decision": "allow"}')
 
 if __name__ == "__main__":
-    import sys
     main()

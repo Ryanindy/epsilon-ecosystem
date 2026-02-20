@@ -2,7 +2,9 @@
 $ErrorActionPreference = "Stop"
 
 try {
-    $DebugLog = Join-Path $HOME ".gemini\extensions\pickle-rick\debug.log"
+    # Resolve Extension Root
+    $ExtDir = Split-Path -Path $PSScriptRoot -Parent
+    $DebugLog = Join-Path $ExtDir "debug.log"
 
     function Log-Message([string]$msg) {
         try { Add-Content -Path $DebugLog -Value "[$((Get-Date).ToString('u'))] [StopHook] $msg" -ErrorAction SilentlyContinue } catch {}
@@ -17,12 +19,7 @@ try {
 
     $StateFile = $env:PICKLE_STATE_FILE
     if (-not $StateFile) {
-        if ($env:EXTENSION_DIR) {
-            $StateFile = Join-Path $env:EXTENSION_DIR "state.json"
-        }
-        else {
-            $StateFile = Join-Path $HOME ".gemini\extensions/pickle-rick/state.json"
-        }
+        $StateFile = Join-Path $ExtDir "state.json"
     }
 
     if (-not (Test-Path $StateFile)) { Write-Output '{"decision": "allow"}'; exit 0 }

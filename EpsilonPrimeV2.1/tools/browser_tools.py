@@ -36,3 +36,5 @@ def search_web(query: str) -> str:
     # For a sovereign agent, we use a simple duckduckgo or similar unauthenticated search
     search_url = f"https://duckduckgo.com/html/?q={query}"
     return visit_webpage(search_url)
+
+BROWSER_TOOLSET = [visit_webpage, search_web]

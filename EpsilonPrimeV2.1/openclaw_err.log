@@ -1,0 +1,2 @@
+2026-02-14T19:20:35.935Z Gateway failed to start: gateway already running (pid 17120); lock timeout after 5000ms
+If the gateway is supervised, stop it with: openclaw gateway stop

@@ -1,0 +1,1 @@
+The RAG system uses retrieval and generation for information access.

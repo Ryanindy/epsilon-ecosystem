@@ -1,6 +1,7 @@
 # Increment Iteration Hook
 $ErrorActionPreference = "Stop"
-$DebugLog = Join-Path $HOME ".gemini/extensions/pickle-rick/debug.log"
+$ExtDir = Split-Path -Path $PSScriptRoot -Parent
+$DebugLog = Join-Path $ExtDir "debug.log"
 
 function Log-Message([string]$msg) {
     try { Add-Content -Path $DebugLog -Value "[$((Get-Date).ToString('u'))] [Increment] $msg" -ErrorAction SilentlyContinue } catch {}
@@ -11,12 +12,7 @@ catch { Write-Output '{"decision": "allow"}'; exit 0 }
 
 $StateFile = $env:PICKLE_STATE_FILE
 if (-not $StateFile) {
-    if ($env:EXTENSION_DIR) {
-        $StateFile = Join-Path $env:EXTENSION_DIR "state.json"
-    }
-    else {
-        $StateFile = Join-Path $HOME ".gemini/extensions/pickle-rick/state.json"
-    }
+    $StateFile = Join-Path $ExtDir "state.json"
 }
 
 if (-not (Test-Path $StateFile)) { Write-Output '{"decision": "allow"}'; exit 0 }

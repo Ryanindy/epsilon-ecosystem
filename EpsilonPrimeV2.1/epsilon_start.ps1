@@ -2,6 +2,7 @@
 # This script is the single point of entry for launching the entire ecosystem.
 # It ensures all services start in the correct order and are managed.
 
+$PROJECT_ROOT = $PSScriptRoot
 $args_str = $args -join " "
 Write-Host "--- LAUNCHING EPSILON PRIME V3.0 ---"
 if ($args_str) { Write-Host "[DEBUG] Arguments: $args_str" -ForegroundColor Cyan }
@@ -18,7 +19,7 @@ if (!(Get-Command $python_cmd -ErrorAction SilentlyContinue)) {
 
 # Step 1: Run the Hardened Bootloader
 Write-Host "[1/6] Running Hardened Boot Sequence..."
-& $python_cmd -u "boot/BOOT.py" $args
+& $python_cmd -u "$PROJECT_ROOT\boot\BOOT.py" $args
 if ($LASTEXITCODE -ne 0) {
     Write-Host "[FATAL] Boot sequence failed. Aborting startup." -ForegroundColor Red
     exit 1
@@ -27,12 +28,12 @@ Write-Host "[SUCCESS] Core services ignited." -ForegroundColor Green
 
 # Step 2: Launch Healer Daemon
 Write-Host "[2/6] Launching Self-Healing Daemon..."
-Start-Process -FilePath "run_healer.bat" -WindowStyle Hidden
+Start-Process -FilePath "$PROJECT_ROOT\run_healer.bat" -WindowStyle Hidden
 Write-Host "[SUCCESS] Healer active in background." -ForegroundColor Green
 
 # Step 3: Launch Cognitive Loop
 Write-Host "[3/6] Igniting Cognitive Loop..."
-Start-Process -FilePath $python_cmd -ArgumentList "tools/autonomy/cognitive_loop.py" -WindowStyle Hidden
+Start-Process -FilePath $python_cmd -ArgumentList "$PROJECT_ROOT\tools\autonomy\cognitive_loop.py" -WindowStyle Hidden
 Write-Host "[SUCCESS] Autonomy Engine Online." -ForegroundColor Green
 
 # Step 4: Verify Key Services are LIVE
@@ -69,3 +70,7 @@ Write-Host "[6/6] Running Final System Diagnostic..."
 & $python_cmd -u "tools/sanity_check_v3.py"
 
 Write-Host "--- SOVEREIGN ECOSYSTEM IS OPERATIONAL ---"
+
+# Step 7: Launch Gemini CLI
+Write-Host "[7/7] Launching Gemini CLI..." -ForegroundColor Cyan
+gemini

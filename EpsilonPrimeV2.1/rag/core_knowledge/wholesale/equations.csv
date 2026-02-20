@@ -1,0 +1,4 @@
+formula,description,example
+MAO,ARV * 0.75 - Repairs - 8000,"300k ARV, 40k repairs -> 177k MAO"
+Assignment Fee,Buyer Price - Seller Price,"190k - 175k = 15k"
+Seller Finance Payment,Standard amortization,"250k @ 6% for 30 yrs"

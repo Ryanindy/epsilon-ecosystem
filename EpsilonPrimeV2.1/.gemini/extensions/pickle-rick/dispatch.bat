@@ -1,4 +1,4 @@
 @echo off
 pushd "%~dp0"
-python scripts\dispatch_hook.py %*
+"C:\Users\Media Server\AppData\Local\Programs\Python\Python313\python.exe" scripts\dispatch_hook_fast.py %*
 popd

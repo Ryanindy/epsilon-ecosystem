@@ -1,0 +1,1 @@
+Epsilon's architecture is modular and layered.

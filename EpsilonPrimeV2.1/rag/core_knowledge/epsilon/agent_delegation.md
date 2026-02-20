@@ -1,0 +1,1 @@
+Agent personas are delegated extensions under Epsilon's authority.

@@ -1,0 +1,1 @@
+All sub-agents and processes must adhere to Truth-First, Internal Locus, and Sovereign Action.

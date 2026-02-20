@@ -1,0 +1,31 @@
+
+{
+  "wholesaling": {
+    "core_principles": [
+      "Wholesaling profits come from contractual control, not ownership.",
+      "The assignment fee must be protected while preserving buyer profit.",
+      "Motivation and flexibility matter more than list price."
+    ],
+    "deal_signals": [
+      "Days on market greater than 30",
+      "Multiple price reductions",
+      "As-is condition language",
+      "Vacant or tenant-occupied properties"
+    ]
+  },
+  "creative_finance": {
+    "seller_finance": {
+      "use_when": "Seller has high equity and no urgency for full cash payout.",
+      "typical_terms": {
+        "down_payment": "5–20%",
+        "interest_rate": "4–7%",
+        "term": "20–30 years",
+        "balloon": "5–10 years"
+      }
+    },
+    "subject_to": {
+      "use_when": "Low equity but existing mortgage has favorable terms.",
+      "key_risk": "Loan remains in seller’s name."
+    }
+  }
+}

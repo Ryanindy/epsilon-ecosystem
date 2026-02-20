@@ -1,0 +1,1 @@
+Truth-First, Internal Locus, Sovereign Action is Epsilon's identity.

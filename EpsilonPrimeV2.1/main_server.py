@@ -9,6 +9,7 @@ import sys
 import glob
 import socket
 import logging
+from concurrent.futures import ThreadPoolExecutor
 
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify, render_template
@@ -86,11 +87,22 @@ def api_status():
     try:
         print("API_STATUS: Entered endpoint.", file=sys.stderr)
         
-        services = {
-            "n8n": check_port(5678),
-            "openclaw": check_port(18789),
-            "api_bridge": "LIVE"
+        service_map = {
+            "n8n": 5678,
+            "openclaw": 18789
         }
+        
+        services = {"api_bridge": "LIVE"}
+        
+        with ThreadPoolExecutor(max_workers=len(service_map)) as executor:
+            future_to_service = {executor.submit(check_port, port): name for name, port in service_map.items()}
+            for future in future_to_service:
+                name = future_to_service[future]
+                try:
+                    services[name] = future.result()
+                except Exception as e:
+                    services[name] = f"ERROR: {e}"
+
         print(f"API_STATUS: Service checks complete: {services}", file=sys.stderr)
         
         rag_path = os.path.join(PROJECT_ROOT, "rag", ".chromadb")

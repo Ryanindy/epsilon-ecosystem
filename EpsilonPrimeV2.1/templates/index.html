@@ -4,13 +4,22 @@
     <meta charset="UTF-8">
     <title>EPSILON PRIME | SOVEREIGN PORTAL</title>
     <style>
-        body { background: #0a0a0a; color: #00ffcc; font-family: 'Courier New', Courier, monospace; margin: 20px; }
-        .header { border-bottom: 2px solid #00ffcc; padding-bottom: 10px; margin-bottom: 20px; }
-        .status-box { border: 1px solid #333; padding: 15px; background: #111; margin-bottom: 10px; }
-        .monitor { background: #000; color: #0f0; padding: 10px; height: 300px; overflow-y: scroll; font-size: 0.9em; border: 1px solid #00ffcc; }
-        .label { color: #888; text-transform: uppercase; font-size: 0.8em; }
+        body { background: #0a0a0a; color: #00ffcc; font-family: 'Courier New', Courier, monospace; margin: 20px; display: flex; flex-direction: column; height: 95vh; }
+        .header { border-bottom: 2px solid #00ffcc; padding-bottom: 10px; margin-bottom: 20px; flex-shrink: 0; }
+        .main-container { display: flex; flex: 1; gap: 20px; overflow: hidden; }
+        .left-panel { flex: 2; display: flex; flex-direction: column; gap: 10px; }
+        .right-panel { flex: 1; display: flex; flex-direction: column; gap: 10px; border-left: 1px solid #333; padding-left: 20px; }
+        .status-box { border: 1px solid #333; padding: 15px; background: #111; }
+        .monitor { background: #000; color: #0f0; padding: 10px; flex: 1; overflow-y: auto; font-size: 0.85em; border: 1px solid #00ffcc; }
+        .chat-box { border: 1px solid #00ffcc; background: #111; display: flex; flex-direction: column; height: 300px; }
+        #chat-history { flex: 1; overflow-y: auto; padding: 10px; font-size: 0.9em; }
+        .chat-input-area { display: flex; border-top: 1px solid #333; }
+        #chat-input { flex: 1; background: #000; color: #00ffcc; border: none; padding: 10px; outline: none; }
+        #send-btn { background: #00ffcc; color: #000; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; }
+        .list-section { background: #111; padding: 10px; border: 1px solid #333; max-height: 200px; overflow-y: auto; }
+        .label { color: #888; text-transform: uppercase; font-size: 0.7em; letter-spacing: 1px; }
         .online { color: #00ff00; }
-        .critical { color: #ff3300; }
+        .item { font-size: 0.8em; margin-bottom: 4px; border-bottom: 1px solid #222; }
     </style>
 </head>
 <body>
@@ -19,37 +28,138 @@
         <p>SOVEREIGN MAINFRAME OPERATIONAL</p>
     </div>
 
-    <div class="status-box">
-        <span class="label">Architecture:</span> <span class="online">Sovereign Hive V3.0</span><br>
-        <span class="label">Cortex Node:</span> <span class="online">Epsilon Active</span><br>
-        <span class="label">Packages:</span> <span class="online">PNPM Workspace Ready</span><br>
-        <span class="label">RAG Engine:</span> <span class="online">HyDE Expansion Enabled</span>
-    </div>
+    <div class="main-container">
+        <div class="left-panel">
+            <div class="status-box">
+                <span class="label">Architecture:</span> <span class="online">Sovereign Hive V3.0</span> | 
+                <span class="label">Cortex Node:</span> <span class="online">Epsilon Active</span>
+            </div>
+            
+            <div class="monitor" id="monitor">
+                [SYSTEM] Initializing Monitoring Feedback Loop...<br>
+            </div>
 
-    <h3>SYSTEM MONITOR</h3>
-    <div id="monitor" class="monitor">
-        [SYSTEM] Initializing Monitoring Feedback Loop...<br>
-        [CORTEX] Epsilon Governance Node: ONLINE<br>
-        [HIVE]   Sub-Agent Swarm (Coder, Researcher): READY<br>
-        [BACKUP] GitHub Force-Sync: ENABLED<br>
-        [SYSTEM] All paths validated.
+            <div class="chat-box">
+                <div id="chat-history"></div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Enter Directive for Epsilon...">
+                    <button id="send-btn">SEND</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <span class="label">⚡ Commands</span>
+            <div id="commands-list" class="list-section"></div>
+            
+            <span class="label">🛠️ Active Skills</span>
+            <div id="skills-list" class="list-section"></div>
+
+            <span class="label">🎟️ Tickets (Latest Session)</span>
+            <div id="tickets-list" class="list-section"></div>
+            <div class="ticket-form" style="display: flex; margin-top: 5px;">
+                <input type="text" id="ticket-title" placeholder="New Ticket Title..." style="flex: 1; background: #000; color: #00ffcc; border: 1px solid #333; padding: 5px;">
+                <button id="create-ticket-btn" style="background: #00ffcc; color: #000; border: none; padding: 5px 10px; cursor: pointer;">CREATE</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Simple mock for real-time updates (can be linked to an API later)
-        const monitor = document.getElementById('monitor');
-        setInterval(() => {
-            const now = new Date().toLocaleTimeString();
-            const logs = [
-                `[HIVE]   Processing background cognitive reflection...`,
-                `[RAG]    Syncing surgical updates to vector db...`,
-                `[SYSTEM] Heartbeat pulse: NOMINAL`,
-                `[JACK]   Executing autonomic maintenance...`
-            ];
-            const log = logs[Math.floor(Math.random() * logs.length)];
-            monitor.innerHTML += `<br>[${now}] ${log}`;
-            monitor.scrollTop = monitor.scrollHeight;
-        }, 15000);
+        const chatHistory = document.getElementById('chat-history');
+        const chatInput = document.getElementById('chat-input');
+        const sendBtn = document.getElementById('send-btn');
+        const createTicketBtn = document.getElementById('create-ticket-btn');
+        const ticketTitleInput = document.getElementById('ticket-title');
+
+        function appendMessage(role, text) {
+            const msg = document.createElement('div');
+            let content = `<strong>${role}:</strong> ${text}`;
+            
+            if (role === 'EPSILON' && (text.includes('rejected') || text.includes('Halted'))) {
+                msg.style.color = '#ff9900'; // Make rejections orange
+                content = `<strong>SYSTEM_AUDIT:</strong> ${text}`;
+            } else if (role === 'SYSTEM') {
+                msg.style.color = '#ff3300'; // Make errors red
+            }
+
+            msg.innerHTML = content;
+            msg.className = 'item';
+            chatHistory.appendChild(msg);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+
+        chatInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                sendBtn.click();
+            }
+        });
+
+        sendBtn.onclick = async () => {
+            const text = chatInput.value;
+            if(!text) return;
+            appendMessage('USER', text);
+            chatInput.value = '';
+            
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({message: text})
+                });
+                const data = await response.json();
+                appendMessage('EPSILON', data.response || data.error);
+            } catch (err) {
+                appendMessage('SYSTEM', 'Fetch Error: ' + err);
+            }
+        };
+
+        createTicketBtn.onclick = async () => {
+            const title = ticketTitleInput.value;
+            if (!title) return;
+            
+            await fetch('/api/ticket', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({title: title, content: "Created from Sovereign Portal."})
+            });
+            
+            ticketTitleInput.value = '';
+            refreshData(); // Refresh to show the new ticket
+        };
+
+        async function refreshData() {
+            try {
+                const status = await fetch('/api/status').then(r => r.json());
+                const skillsData = await fetch('/api/skills').then(r => r.json());
+                const commandsData = await fetch('/api/commands').then(r => r.json());
+                const ticketsData = await fetch('/api/tickets').then(r => r.json());
+
+                document.getElementById('monitor').innerHTML += `<br>[${new Date().toLocaleTimeString()}] Heartbeat: n8n=${status.services.n8n}, RAG=${status.rag}`;
+                document.getElementById('monitor').scrollTop = document.getElementById('monitor').scrollHeight;
+                
+                document.getElementById('skills-list').innerHTML = skillsData.skills.map(s => 
+                    `<div class="item">
+                        <span style="color: ${s.status.includes('ACTIVE') ? '#00ff00' : '#888'}">[${s.status}]</span> 
+                        ${s.name} <span class="label" style="font-size: 0.8em">(${s.category})</span>
+                    </div>`).join('');
+                
+                document.getElementById('commands-list').innerHTML = commandsData.commands.map(c => 
+                    `<div class="item">
+                        <strong style="color: #00ffcc">${c.cmd}</strong> - <span style="font-size: 0.8em; color: #888">${c.desc}</span>
+                    </div>`).join('');
+
+                if (ticketsData.tickets) {
+                    document.getElementById('tickets-list').innerHTML = ticketsData.tickets.map(t => `<div class="item">${t}</div>`).join('');
+                } else {
+                    document.getElementById('tickets-list').innerHTML = `<div class="item">${ticketsData.error || 'No tickets found.'}</div>`;
+                }
+            } catch (err) {
+                console.error("Refresh failed", err);
+            }
+        }
+
+        setInterval(refreshData, 15000);
+        refreshData();
     </script>
 </body>
 </html>

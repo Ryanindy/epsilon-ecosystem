@@ -1,6 +1,51 @@
 [
   {
     "id": "epsilon_0",
+    "name": "10_SKILL_ROUTER.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\10_SKILL_ROUTER.md",
+    "collection": "epsilon",
+    "size": 4266,
+    "extension": ".md",
+    "last_modified": 1770594784.2959306
+  },
+  {
+    "id": "epsilon_1",
+    "name": "confidence_scorer.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\governance\\confidence_scorer.skill.md",
+    "collection": "epsilon",
+    "size": 2351,
+    "extension": ".md",
+    "last_modified": 1770565041.507013
+  },
+  {
+    "id": "epsilon_2",
+    "name": "credit_repair_wa_fcra_croa.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\governance\\credit_repair_wa_fcra_croa.skill.md",
+    "collection": "epsilon",
+    "size": 2977,
+    "extension": ".md",
+    "last_modified": 1770565222.011187
+  },
+  {
+    "id": "epsilon_3",
+    "name": "emergency_lockdown.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\governance\\emergency_lockdown.skill.md",
+    "collection": "epsilon",
+    "size": 2393,
+    "extension": ".md",
+    "last_modified": 1770565041.7167237
+  },
+  {
+    "id": "epsilon_4",
+    "name": "governance_compliance.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\governance\\governance_compliance.skill.md",
+    "collection": "epsilon",
+    "size": 2710,
+    "extension": ".md",
+    "last_modified": 1770564746.1625807
+  },
+  {
+    "id": "epsilon_5",
     "name": "cadznce_ryvn.persona.md",
     "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\personas\\cadznce_ryvn.persona.md",
     "collection": "epsilon",
@@ -9,7 +54,7 @@
     "last_modified": 1770566785.2656624
   },
   {
-    "id": "epsilon_1",
+    "id": "epsilon_6",
     "name": "epsilon_man.persona.md",
     "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\personas\\epsilon_man.persona.md",
     "collection": "epsilon",
@@ -18,13 +63,391 @@
     "last_modified": 1770566829.5545402
   },
   {
-    "id": "epsilon_2",
+    "id": "epsilon_7",
     "name": "eric_frederick.persona.md",
     "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\personas\\eric_frederick.persona.md",
     "collection": "epsilon",
     "size": 1446,
     "extension": ".md",
     "last_modified": 1770566822.039279
+  },
+  {
+    "id": "epsilon_8",
+    "name": "lyra.persona.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\personas\\lyra.persona.md",
+    "collection": "epsilon",
+    "size": 2557,
+    "extension": ".md",
+    "last_modified": 1770598950.720523
+  },
+  {
+    "id": "epsilon_9",
+    "name": "RADAR_GOVERNANCE_OVERRIDE.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\radar\\RADAR_GOVERNANCE_OVERRIDE.md",
+    "collection": "epsilon",
+    "size": 1541,
+    "extension": ".md",
+    "last_modified": 1770560206.4872315
+  },
+  {
+    "id": "epsilon_10",
+    "name": "ai_automation_strategist_smb.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\ai_automation_strategist_smb.skill.md",
+    "collection": "epsilon",
+    "size": 2589,
+    "extension": ".md",
+    "last_modified": 1770565113.2400994
+  },
+  {
+    "id": "epsilon_11",
+    "name": "beamer.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\beamer.skill.md",
+    "collection": "epsilon",
+    "size": 2331,
+    "extension": ".md",
+    "last_modified": 1770560781.21968
+  },
+  {
+    "id": "epsilon_12",
+    "name": "browser_operator.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\browser_operator.skill.md",
+    "collection": "epsilon",
+    "size": 1559,
+    "extension": ".md",
+    "last_modified": 1770595837.681377
+  },
+  {
+    "id": "epsilon_13",
+    "name": "cadznce_ryvn_social_strategist.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\cadznce_ryvn_social_strategist.skill.md",
+    "collection": "epsilon",
+    "size": 3153,
+    "extension": ".md",
+    "last_modified": 1770565212.01906
+  },
+  {
+    "id": "epsilon_14",
+    "name": "code_implementer.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\code_implementer.skill.md",
+    "collection": "epsilon",
+    "size": 2852,
+    "extension": ".md",
+    "last_modified": 1770564735.0215356
+  },
+  {
+    "id": "epsilon_15",
+    "name": "code_researcher.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\code_researcher.skill.md",
+    "collection": "epsilon",
+    "size": 2710,
+    "extension": ".md",
+    "last_modified": 1770565009.5723722
+  },
+  {
+    "id": "epsilon_16",
+    "name": "context_optimizer.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\context_optimizer.skill.md",
+    "collection": "epsilon",
+    "size": 2354,
+    "extension": ".md",
+    "last_modified": 1770565041.6484585
+  },
+  {
+    "id": "epsilon_17",
+    "name": "doc_crawler.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\doc_crawler.skill.md",
+    "collection": "epsilon",
+    "size": 2588,
+    "extension": ".md",
+    "last_modified": 1770565230.3682182
+  },
+  {
+    "id": "epsilon_18",
+    "name": "epsilon_man_core.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\epsilon_man_core.skill.md",
+    "collection": "epsilon",
+    "size": 2753,
+    "extension": ".md",
+    "last_modified": 1770565113.6497257
+  },
+  {
+    "id": "epsilon_19",
+    "name": "eric_executive_assistant.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\eric_executive_assistant.skill.md",
+    "collection": "epsilon",
+    "size": 2633,
+    "extension": ".md",
+    "last_modified": 1770565114.019493
+  },
+  {
+    "id": "epsilon_20",
+    "name": "implementation_planner.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\implementation_planner.skill.md",
+    "collection": "epsilon",
+    "size": 2577,
+    "extension": ".md",
+    "last_modified": 1770564813.0568914
+  },
+  {
+    "id": "epsilon_21",
+    "name": "jack_core.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\jack_core.skill.md",
+    "collection": "epsilon",
+    "size": 2477,
+    "extension": ".md",
+    "last_modified": 1770564796.4998693
+  },
+  {
+    "id": "epsilon_22",
+    "name": "jack_test.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\jack_test.md",
+    "collection": "epsilon",
+    "size": 174,
+    "extension": ".md",
+    "last_modified": 1771102202.7547448
+  },
+  {
+    "id": "epsilon_23",
+    "name": "knowledge_base_curator.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\knowledge_base_curator.skill.md",
+    "collection": "epsilon",
+    "size": 2677,
+    "extension": ".md",
+    "last_modified": 1770565076.83561
+  },
+  {
+    "id": "epsilon_24",
+    "name": "load_pickle_persona.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\load_pickle_persona.skill.md",
+    "collection": "epsilon",
+    "size": 7309,
+    "extension": ".md",
+    "last_modified": 1769554213.8933342
+  },
+  {
+    "id": "epsilon_25",
+    "name": "lockknife_android_forensics.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\lockknife_android_forensics.skill.md",
+    "collection": "epsilon",
+    "size": 2186,
+    "extension": ".md",
+    "last_modified": 1769593027.649783
+  },
+  {
+    "id": "epsilon_26",
+    "name": "metaphysics_analysis.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\metaphysics_analysis.skill.md",
+    "collection": "epsilon",
+    "size": 3002,
+    "extension": ".md",
+    "last_modified": 1770565280.3807187
+  },
+  {
+    "id": "epsilon_27",
+    "name": "n8n_architect.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\n8n_architect.skill.md",
+    "collection": "epsilon",
+    "size": 2880,
+    "extension": ".md",
+    "last_modified": 1770564643.3614252
+  },
+  {
+    "id": "epsilon_28",
+    "name": "n8n_visualizer.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\n8n_visualizer.skill.md",
+    "collection": "epsilon",
+    "size": 2593,
+    "extension": ".md",
+    "last_modified": 1770565288.0302975
+  },
+  {
+    "id": "epsilon_29",
+    "name": "osint_sovereign_agent.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\osint_sovereign_agent.skill.md",
+    "collection": "epsilon",
+    "size": 3632,
+    "extension": ".md",
+    "last_modified": 1770915626.7353
+  },
+  {
+    "id": "epsilon_30",
+    "name": "plan_reviewer.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\plan_reviewer.skill.md",
+    "collection": "epsilon",
+    "size": 2511,
+    "extension": ".md",
+    "last_modified": 1770565040.7941809
+  },
+  {
+    "id": "epsilon_31",
+    "name": "plate_engineer.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\plate_engineer.skill.md",
+    "collection": "epsilon",
+    "size": 92,
+    "extension": ".md",
+    "last_modified": 1770561021.209724
+  },
+  {
+    "id": "epsilon_32",
+    "name": "prd_drafter.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\prd_drafter.skill.md",
+    "collection": "epsilon",
+    "size": 2602,
+    "extension": ".md",
+    "last_modified": 1770565009.6990218
+  },
+  {
+    "id": "epsilon_33",
+    "name": "project_archivist.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\project_archivist.skill.md",
+    "collection": "epsilon",
+    "size": 2544,
+    "extension": ".md",
+    "last_modified": 1770565009.8521063
+  },
+  {
+    "id": "epsilon_34",
+    "name": "radar.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\radar.skill.md",
+    "collection": "epsilon",
+    "size": 2704,
+    "extension": ".md",
+    "last_modified": 1770560781.0930953
+  },
+  {
+    "id": "epsilon_35",
+    "name": "rag_data_attendant.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\rag_data_attendant.skill.md",
+    "collection": "epsilon",
+    "size": 2424,
+    "extension": ".md",
+    "last_modified": 1770565077.0484314
+  },
+  {
+    "id": "epsilon_36",
+    "name": "rag_manager.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\rag_manager.skill.md",
+    "collection": "epsilon",
+    "size": 2707,
+    "extension": ".md",
+    "last_modified": 1770564722.925125
+  },
+  {
+    "id": "epsilon_37",
+    "name": "research_architect.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\research_architect.skill.md",
+    "collection": "epsilon",
+    "size": 2519,
+    "extension": ".md",
+    "last_modified": 1770565077.6710224
+  },
+  {
+    "id": "epsilon_38",
+    "name": "research_reviewer.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\research_reviewer.skill.md",
+    "collection": "epsilon",
+    "size": 2415,
+    "extension": ".md",
+    "last_modified": 1770565041.168111
+  },
+  {
+    "id": "epsilon_39",
+    "name": "ruthless_refactorer.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\ruthless_refactorer.skill.md",
+    "collection": "epsilon",
+    "size": 2586,
+    "extension": ".md",
+    "last_modified": 1770564804.7879682
+  },
+  {
+    "id": "epsilon_40",
+    "name": "session_consolidator.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\session_consolidator.skill.md",
+    "collection": "epsilon",
+    "size": 2504,
+    "extension": ".md",
+    "last_modified": 1770565010.1154199
+  },
+  {
+    "id": "epsilon_41",
+    "name": "skill_compiler.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\skill_compiler.skill.md",
+    "collection": "epsilon",
+    "size": 2305,
+    "extension": ".md",
+    "last_modified": 1770565077.4875374
+  },
+  {
+    "id": "epsilon_42",
+    "name": "skill_trainer_creator.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\skill_trainer_creator.skill.md",
+    "collection": "epsilon",
+    "size": 2550,
+    "extension": ".md",
+    "last_modified": 1770565077.2434845
+  },
+  {
+    "id": "epsilon_43",
+    "name": "ticket_manager.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\ticket_manager.skill.md",
+    "collection": "epsilon",
+    "size": 2533,
+    "extension": ".md",
+    "last_modified": 1770565008.89807
+  },
+  {
+    "id": "epsilon_44",
+    "name": "windows_devops_engineer.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\windows_devops_engineer.skill.md",
+    "collection": "epsilon",
+    "size": 2650,
+    "extension": ".md",
+    "last_modified": 1770565296.11806
+  },
+  {
+    "id": "epsilon_45",
+    "name": "writing_critic_evaluator.skill.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\tools\\writing_critic_evaluator.skill.md",
+    "collection": "epsilon",
+    "size": 2599,
+    "extension": ".md",
+    "last_modified": 1770565114.187954
+  },
+  {
+    "id": "epsilon_46",
+    "name": "EPSILON.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\trinity\\EPSILON.md",
+    "collection": "epsilon",
+    "size": 3346,
+    "extension": ".md",
+    "last_modified": 1770572217.4857109
+  },
+  {
+    "id": "epsilon_47",
+    "name": "EPSILON_V3_SOVEREIGN_SPEC.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\trinity\\EPSILON_V3_SOVEREIGN_SPEC.md",
+    "collection": "epsilon",
+    "size": 3743,
+    "extension": ".md",
+    "last_modified": 1770850241.0328941
+  },
+  {
+    "id": "epsilon_48",
+    "name": "JACK.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\trinity\\JACK.md",
+    "collection": "epsilon",
+    "size": 2317,
+    "extension": ".md",
+    "last_modified": 1770567072.4081287
+  },
+  {
+    "id": "epsilon_49",
+    "name": "PICKLE.md",
+    "path": "C:\\Users\\Media Server\\EpsilonPrimeV2.1\\skills\\trinity\\PICKLE.md",
+    "collection": "epsilon",
+    "size": 2651,
+    "extension": ".md",
+    "last_modified": 1770567092.6919594
   },
   {
     "id": "jays_library_0",

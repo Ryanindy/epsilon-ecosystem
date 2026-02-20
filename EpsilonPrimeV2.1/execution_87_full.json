@@ -1,0 +1,200 @@
+[
+  {
+    "version": 1,
+    "startData": "1",
+    "resultData": "2",
+    "executionData": "3"
+  },
+  {},
+  {
+    "error": "4",
+    "runData": "5",
+    "lastNodeExecuted": "6"
+  },
+  {
+    "contextData": "7",
+    "nodeExecutionStack": "8",
+    "metadata": "9",
+    "waitingExecution": "10",
+    "waitingExecutionSource": "11",
+    "runtimeData": "12"
+  },
+  {
+    "level": "13",
+    "tags": "14",
+    "description": "15",
+    "lineNumber": 2,
+    "message": "16",
+    "stack": "17"
+  },
+  {
+    "Telegram Trigger": "18",
+    "Sanitize & Extract": "19"
+  },
+  "Sanitize & Extract",
+  {},
+  [
+    "20"
+  ],
+  {},
+  {},
+  {},
+  {
+    "version": 1,
+    "establishedAt": 1771316572530,
+    "source": "21",
+    "triggerNode": "22"
+  },
+  "error",
+  {},
+  "TypeError",
+  "Cannot read properties of undefined (reading 'message') [line 2]",
+  "TypeError: Cannot read properties of undefined (reading 'message')\n    at VmCodeWrapper (evalmachine.<anonymous>:2:17)\n    at evalmachine.<anonymous>:14:2\n    at Script.runInContext (node:vm:149:12)\n    at runInContext (node:vm:301:6)\n    at result (C:\\Users\\Media Server\\AppData\\Roaming\\npm\\node_modules\\n8n\\node_modules\\@n8n\\task-runner\\dist\\js-task-runner\\js-task-runner.js:185:61)\n    at new Promise (<anonymous>)\n    at JsTaskRunner.runForAllItems (C:\\Users\\Media Server\\AppData\\Roaming\\npm\\node_modules\\n8n\\node_modules\\@n8n\\task-runner\\dist\\js-task-runner\\js-task-runner.js:178:34)\n    at JsTaskRunner.executeTask (C:\\Users\\Media Server\\AppData\\Roaming\\npm\\node_modules\\n8n\\node_modules\\@n8n\\task-runner\\dist\\js-task-runner\\js-task-runner.js:128:26)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async Object.waitingForSettings (C:\\Users\\Media Server\\AppData\\Roaming\\npm\\node_modules\\n8n\\node_modules\\@n8n\\task-runner\\dist\\task-runner.js:256:17)",
+  [
+    "23"
+  ],
+  [
+    "24"
+  ],
+  {
+    "node": "25",
+    "data": "26",
+    "source": "27"
+  },
+  "webhook",
+  {
+    "name": "28",
+    "type": "29"
+  },
+  {
+    "startTime": 1771316572572,
+    "executionIndex": 0,
+    "source": "30",
+    "hints": "31",
+    "executionTime": 1,
+    "executionStatus": "32",
+    "data": "33"
+  },
+  {
+    "startTime": 1771316572631,
+    "executionIndex": 1,
+    "source": "34",
+    "hints": "35",
+    "executionTime": 63,
+    "executionStatus": "13",
+    "error": "36"
+  },
+  {
+    "parameters": "37",
+    "id": "38",
+    "name": "6",
+    "type": "39",
+    "typeVersion": 2,
+    "position": "40"
+  },
+  {
+    "main": "41"
+  },
+  {
+    "main": "34"
+  },
+  "Telegram Trigger",
+  "n8n-nodes-base.telegramTrigger",
+  [],
+  [],
+  "success",
+  {
+    "main": "42"
+  },
+  [
+    "43"
+  ],
+  [],
+  {
+    "level": "13",
+    "tags": "14",
+    "description": "15",
+    "lineNumber": 2,
+    "message": "16",
+    "stack": "17"
+  },
+  {
+    "mode": "44",
+    "language": "45",
+    "jsCode": "46",
+    "notice": "47"
+  },
+  "sanitize-node",
+  "n8n-nodes-base.code",
+  [
+    304,
+    304
+  ],
+  [
+    "48"
+  ],
+  [
+    "49"
+  ],
+  {
+    "previousNode": "28",
+    "previousNodeOutput": 0,
+    "previousNodeRun": 0
+  },
+  "runOnceForAllItems",
+  "javaScript",
+  "const body = items[0].json.body;\nlet text = body.message.text || '';\n// Remove problematic characters and trim\ntext = text.replace(/[\\\"\\r\\n]/g, ' ').trim();\n\nreturn [{\n  json: {\n    chat_id: body.message.chat.id,\n    user_text: text,\n    username: body.message.from.username || 'unknown',\n    raw_payload: body\n  }\n}];",
+  "",
+  [
+    "50"
+  ],
+  [
+    "51"
+  ],
+  {
+    "json": "52",
+    "pairedItem": "53"
+  },
+  {
+    "json": "52",
+    "pairedItem": "54"
+  },
+  {
+    "update_id": 713821123,
+    "message": "55"
+  },
+  {
+    "item": 0
+  },
+  {
+    "item": 0
+  },
+  {
+    "message_id": 14,
+    "from": "56",
+    "chat": "57",
+    "date": 1771316571,
+    "text": "58"
+  },
+  {
+    "id": 7468069393,
+    "is_bot": false,
+    "first_name": "59",
+    "last_name": "60",
+    "username": "61",
+    "language_code": "62"
+  },
+  {
+    "id": 7468069393,
+    "first_name": "59",
+    "last_name": "60",
+    "username": "61",
+    "type": "63"
+  },
+  "Hello",
+  "Ryan",
+  "Indiana",
+  "Ryanindy83",
+  "en",
+  "private"
+]
